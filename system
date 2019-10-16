@@ -1,0 +1,3 @@
+#--------------------------SYSTEM--------------------------
+#Display information about CPU | THREAD | CORES
+lscpu

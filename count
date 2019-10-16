@@ -1,3 +1,8 @@
+#--------------------------COUNT--------------------------
+
+
+https://www.computerhope.com/issues/ch001649.htm
+
 #Count lines, words and characters from file
 wc /proc/cpuinfo
 
@@ -14,7 +19,12 @@ wc -w /proc/cpuinfo
 #Count number of users
 getent passwd | wc -l
 
-#Count number of opened sessions
+#Count number of opened sessions (ssh...)
+#Not unique
+#A user can have multiple sessions
 who | wc -l
 #OR
 w -h |  wc -l
+
+#Count all user accounts
+wc -l /etc/passwd
