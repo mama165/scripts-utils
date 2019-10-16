@@ -1,0 +1,20 @@
+#Count lines, words and characters from file
+wc /proc/cpuinfo
+
+#Result :
+x y z /proc/cpuinfo
+
+#x : the number of lines
+#y : the number of words
+#z : the number of characters
+
+#Display words
+wc -w /proc/cpuinfo
+
+#Count number of users
+getent passwd | wc -l
+
+#Count number of opened sessions
+who | wc -l
+#OR
+w -h |  wc -l
