@@ -1,3 +1,12 @@
 #--------------------------SYSTEM--------------------------
+
+#Find Linux distro
+cat /etc/*-release
+
+#Find Linux Kernel version
+uname -a
+#OR
+uname -mrs
+
 #Display information about CPU | THREAD | CORES
 lscpu

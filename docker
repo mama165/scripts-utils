@@ -79,3 +79,43 @@ docker-compose up -d
 #Check if config file is correct (from docker-compose.yml)
 docker-compose config
 
+#Container processes vs hosts processes
+    https://stackoverflow.com/questions/39931316/what-is-the-pid-in-the-host-of-a-process-running-inside-a-docker-container
+#Example
+    #We have 3 blocked processes (apache for example)
+    #Find a processus sleeping from container to host
+    #Inside container :
+        ps -aef
+    #Output
+        PID   USER     TIME   COMMAND
+         1    root     0:00     sh
+         7    root     0:00     sleep 900 #1
+         8    root     0:00     sleep 900 #2
+         9    root     0:00     sleep 900 #3
+        10    root     0:00     ps -fe
+    #You found the PID of your sleeping processus on container
+    #Now find them on host to shut them down
+    ps -fe | grep sleep
+    #Output
+    root     10394 10366  0 09:11 pts/10   00:00:00 sleep 900
+    root     10397 10366  0 09:12 pts/10   00:00:00 sleep 900
+    root     10398 10366  0 09:12 pts/10   00:00:00 sleep 900
+    #The processes 10394, 10397, 10398 are running on the host
+    #Find the mapping with Namespace PID
+    #Be careful of Linux version maybe it won't work
+    #Maybe Namespace PID is only available since Linux 4.1 !
+    grep -i pid /proc/10394/status
+    #Output
+    Pid:    10394
+    PPid:   10366
+    TracerPid:  0
+    NSpid:  10394   7
+    #The processus 10394 has the id 7 in the container
+    #Kill the processus inside the container
+    kill 7
+    #The processus will disappear from the container
+
+#Display processus from container
+(ps -ef | grep $(docker inspect --format '{{.State.Pid}}' php-sandbox) | awk '{print $2}') ; do grep NSpid: /proc/$i/status ; done
+#OR
+for i in $(ps -ef | grep `docker inspect --format '{{.State.Pid}}' containerID` | awk '{print $2}') ; do grep NSpid: /proc/$i/status ;
