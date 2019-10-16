@@ -1,5 +1,31 @@
 #--------------------------GIT --------------------------
 
+#Initialize a repository called "docker-utils"
+git init
+git add foo.txt
+git commit -m "wip: first commit"
+git remote add origin git@github.com:mama165/docker-utils.git
+git push --set-upstream origin master
+
+#Create a new a branch feature (from our current commit)
+#We directly arrive inside the new branch
+git checkout -b feature
+#Example
+git checkout -b poc-gitlab
+
+#Switch from branch feature to master
+git checkout master
+
+#Display all branches (local)
+git branch -l
+#OR
+git branch --list
+
+#Display all branches (remote)
+git branch -r
+
+#Display all branches (remote & local)
+git branch -a
 
 #Delete branch on local (with warning)
 #You have to be on another branch for that
@@ -8,3 +34,9 @@ git branch -d <branch_name>
 #Delete branch on local (without warning)
 #You have to be on another branch for that
 git branch -D <branch_name>
+
+#Add all files inside current folder
+git add .
+
+#Undo git add
+git reset

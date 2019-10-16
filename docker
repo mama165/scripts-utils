@@ -22,6 +22,22 @@ docker run -it -d -p 9000:80 --name=debian_container1 debian
 #Output :
 root@9254e01fadad
 
+
+#BE CAREFUL WITH DETACHED MODE !!
+#A container started in detached mode exits when the run process exits
+#Run a nginx container called "reverse_proxy" and start it
+#So don't that :
+#The container will stop when the service is up
+docker run -d -p 80:80 --name reverse_proxy nginx service nginx start
+
+#BUT
+
+#Prefer this :
+docker run -d -p 80:80 --name reverse_proxy nginx nginx -g 'daemon off;'
+
+#Reattach to the nginx
+docker attach <nginx_container_name>
+
 #Stop container gracefully (SIGTERM)
 docker stop
 
@@ -52,7 +68,7 @@ docker netwkork ls
 
 #Check for version
 docker-compose -v
-dokcer-compose --version
+docker-compose --version
 
 #Run docker services(from docker-compose.yml)
 docker-compose up
