@@ -1,0 +1,65 @@
+#--------------------------DOCKER--------------------------
+
+#Check for version
+docker --version
+
+#Information about containers
+docker info
+
+#Search inside docker hub (official repository online)
+docker search redis
+docker search elasticsearch
+
+#Retrieve image from docker hub
+docker pull debian
+
+#Run a debian image with name "debian_container" in interactive & detached mode
+#Interactive mode : enter in the container directly after that
+#Detached mode : no output inside the console (we can continue on the same machine)
+#the same as a ssh connection or going inside a VM
+#Port 9000 on host is connected to port 80 on container
+docker run -it -d -p 9000:80 --name=debian_container1 debian
+#Output :
+root@9254e01fadad
+
+#Stop container gracefully (SIGTERM)
+docker stop
+
+#https://medium.com/@gchudnov/trapping-signals-in-docker-containers-7a57fdda7d86
+#https://www.memogeeks.com/2018/11/kill-stop-and-pause-docker-commands.html#summary
+#https://superuser.com/questions/756999/whats-the-difference-between-docker-stop-and-docker-kill/1204541#1204541
+#Stop container (abruptly)
+docker kill
+
+docker events
+
+#Information about processes inside container
+docker top <container>
+
+#Connect as root
+docker exec -it <container> -u root /bin/bash
+#or
+docker exec -it <container> -u root bash
+#or
+docker exec -it <container> -u root /bin/sh
+#or
+docker exec -it <container> -u root sh
+
+#Displays networks between containers
+docker netwkork ls
+
+#--------------------------DOCKER COMPOSE--------------------------
+
+#Check for version
+docker-compose -v
+dokcer-compose --version
+
+#Run docker services(from docker-compose.yml)
+docker-compose up
+#Detached mode (you won't see any logs)
+docker-compose up -d
+
+
+#Check if config file is correct (from docker-compose.yml)
+docker-compose config
+

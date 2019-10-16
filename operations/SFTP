@@ -1,0 +1,56 @@
+#--------------------------CREATION OF FTP CLIENT--------------------------
+
+#On n'autorise que du SFTP càd FTP over SSH avec l'IP (192.168.1.20) du client connue
+#We only authorize SFTP i.e FTP over SSH
+# IP client => 192.168.1.20
+
+#Create an account (with /home)
+adduser -m john.wick
+
+#Take a look inside /etc/passwd (user (uid,guid) should be there)
+#Add password
+passwd john.wick
+
+#Check if there is an iptable
+#If nothing it's not over
+iptable -L
+
+#Check if there is a firewalld service
+systemctl status firewalld.service
+
+#Open port if closed
+firewall-cmd --permanent --add-port=8243/tcp
+firewall-cmd --reload
+
+# Check if port is opened
+netstat -ntupl (deprecated)
+ss -ntupl
+
+#We have a new machine accessible on port 8243
+#Make SSH listen on port 8243
+/etc/ssh/sshd_config
+
+#Listen on port 8243 (FTP for client)
+Port 8243
+
+#Don't forget to listen again on port 22
+#Listen on port 22 (SSH for us)
+#The bastion can know connect on port 22
+#2nd rule
+Port 22
+
+#Only allow one ip adresse to connect
+AllowUsers john.wick@192.168.1.20
+
+#Restart sshd service
+#Don't stop and start or you'll be shutted down from the server
+systemctl restart sshd
+
+#Force user to stay in folder /var/data/www
+Subsystem sftp internal-sftp
+
+Match User john.wick
+    X11Forwarding no
+	AllowTcpForwarding no
+	ChrootDirectory var/data/www
+	ForceCommand internal-sftp

@@ -1,0 +1,92 @@
+#--------------------------DISKS & VOLUMES--------------------------
+
+#PHYSICAL VOLUME (PV)
+#Represents your physical disks
+
+#VOLUME GROUP (VG)
+#Represents your physical disks
+#Can be composed of several physical disks
+
+#LOGICAL VOLUME (LV)
+#Represents a place where FS are stored
+
+#VG or LV can be resized
+#PV can't be resized
+
+#List all physical volumes
+fdisk -l
+#Output : Disque /dev/sda 
+#         Disque /dev/sdb 
+
+
+#Create a physical volume
+pvcreate /dev/sdb
+
+#Check if physical volume has been created
+pv display
+#OR
+pvs
+
+#Create a VG
+vgcreate VG0 /dev/sdb
+
+#Check if volume group has been created
+vgdisplay
+#OR
+vgs
+
+#Create a logical volume of 5Go in the previous volume group
+lvcreate -n <LVname> -L <size> <nom du VG>
+lvcreate -n LVTest -L 5go VG00
+
+#Create a partition ext4
+mkfs -t <fileSystemType> <patLVPathh>
+mkfs -t ext4 /dev/mapper/VG00-LVTest
+
+#Create mount point folder
+mkdir <folder>
+mkdir /Test
+
+#Mount the volume
+mount /dev/mapper/VG00-LVTest /Test
+
+#Check if partition has been created
+df -h
+
+#--------------------------OPERATIONS--------------------------
+
+
+#Increase volume group & logical volume (VG & LV)
+    #We have a ne disk and we want to increase the VG
+    #1)Create a new PV
+        pvcreate <disk>
+    #2)Increase our VG
+        vgextend <VGName> <disk>
+        vgextend VG00 /dev/sdc
+    #3)Check our LV
+        e2fsck -f <LVPath>
+        e2fsck -f /dev/mapper/VG00-LVTest
+    #4)Resize LV
+        lvresize -L <newSize> <LVPath>
+        lvresize -L 2go /dev/mapper/VG00-LVTest
+    #5)Resize the partition
+        resize2fs <LVPath>
+        resize2fs /dev/mapper/VG00-LVTest
+
+#Decrease logical volume (very careful !)
+    #If LV decreased before partition it can be dangerous
+    #1)Unmount the partition
+        unmount <partition>
+    #2)Check partition
+        e2fsck <partitionPath>
+        e2fsck /dev/mapper/VG00-LVTest
+    #2)Resize partition
+        resize2fs <partitionPath> <newSize>
+        resize2fs /dev/mapper/VG00-LVTest 2500m
+    #3)Reduce LV
+        lvreduce -L <newSize> <LVPath>
+        lvreduce -L 2500m /dev/mapper/VG00-LVTest
+    #4)Mount our volume
+        mount /dev/mapper/VG00-LVTest /Test
+    #5)Check size different
+        df -h

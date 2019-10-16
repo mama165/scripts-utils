@@ -1,0 +1,10 @@
+#--------------------------GIT --------------------------
+
+
+#Delete branch on local (with warning)
+#You have to be on another branch for that
+git branch -d <branch_name>
+
+#Delete branch on local (without warning)
+#You have to be on another branch for that
+git branch -D <branch_name>
