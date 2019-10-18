@@ -52,6 +52,16 @@ docker events
 #Information about processes inside container
 docker top <container>
 
+#https://blog.gougousis.net/file-permissions-the-painful-side-of-docker/
+#Copy a file (or a folder) from host to container
+#docker cp <SRC_PATH> <container_name>:<DEST_PATH>
+docker cp foo.txt nginx:~foo.txt
+
+#Copy a file (or a folder) from container to host
+#Files copied are created with UID:GID of the root user
+#docker cp <container_name>:<SRC_PATH> <DEST_PATH>
+docker cp nginx:~foo.txt foo.txt
+
 #Connect as root
 docker exec -it <container> -u root /bin/bash
 #or
