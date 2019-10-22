@@ -44,8 +44,15 @@ docker stop
 #https://medium.com/@gchudnov/trapping-signals-in-docker-containers-7a57fdda7d86
 #https://www.memogeeks.com/2018/11/kill-stop-and-pause-docker-commands.html#summary
 #https://superuser.com/questions/756999/whats-the-difference-between-docker-stop-and-docker-kill/1204541#1204541
-#Stop container (abruptly)
+#Kill one or more containers (abruptly)
 docker kill
+
+#Kill containers with a signal
+#SIGKILL by default
+docker kill --signal=SIGHUP <container>
+#OR
+docker kill -s
+
 
 docker events
 
