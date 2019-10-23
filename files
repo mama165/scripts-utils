@@ -1,4 +1,0 @@
-#--------------------------FILES--------------------------
-
-#Compare two files
-diff expected.txt output.txt
