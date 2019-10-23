@@ -49,7 +49,33 @@ git add .
 git reset
 
 #Your are working on a local branch feature
-#You want to put all your changes on master
-#You need to update your local branch master
-git pull
-git rebase master
+#You want to put all your changes from master
+#You need to update your local branch feature
+#https://www.atlassian.com/fr/git/tutorials/merging-vs-rebasing
+
+    #MERGE
+    git checkout master
+    git merge master
+    #OR
+    git merge feature master
+    #A merge commit will be added
+
+    #REBASE
+    git checkout feature
+    git rebase master
+    #No merge commit
+    #Commit history cleaner
+    #Abort the rebase
+    git rebase --abort
+    #Continue the rebase
+    git rebase --continue
+    #Be careful when pushing all changes
+    git push -- force
+
+    #REBASE INTERACTIVE
+    git checkout feature
+    git rebase -i master
+    #We can rewrite each commit before
+    #adding the feature on master branch
+    #Be careful when pushing all changes
+    git push -- force
