@@ -78,4 +78,4 @@ git reset
     #We can rewrite each commit before
     #adding the feature on master branch
     #Be careful when pushing all changes
-    git push -- force
+    git push --force
