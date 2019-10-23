@@ -1,7 +1,7 @@
 #--------------------------PACKAGE--------------------------
 #What's a package ?
 #Archive containing files, information for the OS
-# Different type of systems => RPM
+#Different type of systems => RPM
 
 #CentOS
 #YUM => Yellowdog Updater, Modified
