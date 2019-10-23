@@ -7,6 +7,13 @@ git commit -m "wip: first commit"
 git remote add origin git@github.com:mama165/docker-utils.git
 git push --set-upstream origin master
 
+#Get all changes from remote (with merge commit)
+#Issuing a git fetch + girt merge
+git pull
+
+#Get all changed from remote (without merge commit)
+git pull --rebase
+
 #Create a new a branch feature (from our current commit)
 #We directly arrive inside the new branch
 git checkout -b feature
@@ -40,3 +47,9 @@ git add .
 
 #Undo git add
 git reset
+
+#Your are working on a local branch feature
+#You want to put all your changes on master
+#You need to update your local branch master
+git pull
+git rebase master
