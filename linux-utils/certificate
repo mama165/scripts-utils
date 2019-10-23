@@ -1,0 +1,8 @@
+#--------------------------CERTIFICATE--------------------------
+
+#Gandi
+
+#Type of files
+.csr
+.crt
+.pem

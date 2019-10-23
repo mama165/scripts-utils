@@ -1,0 +1,13 @@
+#--------------------------PROCESSUS--------------------------
+
+#Display processus
+ps -aef
+
+#Display all current processes
+ps ax | less
+
+#Display processes (ancestors to children)
+# -u : user who launched it
+# -p : pid of the process
+pstree
+pstree -up | less

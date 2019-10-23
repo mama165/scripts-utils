@@ -1,0 +1,46 @@
+#--------------------------BASTION--------------------------
+#https://doc.ubuntu-fr.org/arborescence
+
+#Racine /
+/boot #bootstrap
+      #Static files (bootloader, Kernel, Grub, ramdisk image...)
+/data
+    /admin
+    /bck
+    /dba
+    /exploit
+    /reseau
+    /sauvegarde/
+    /sftp
+    /solution
+    /stockage
+    /zimbra
+/bin    #binaries
+        #Where executable files are located
+        #Files available to all users
+        #Common librairies (ex: cd, cat, ls...)
+/dev    #devices
+        #device drivers (CD, hard disk)
+/etc    #editing text config
+        #Configuration files for all programs
+/home   #home for all users
+    /john.wick
+    /bryan.mills
+/media  #Contains mounting points
+/mnt    #mount
+        #Temporary directory used for mounting file systems (CD-ROM, disquettes...)
+/opt    #Optional
+        #Where are installed commercial sotfwares
+        #Where optional softwares are installed (except packet manager)
+/proc   #Processes
+        #Virtual directory for system information (core, processus)
+/root   #(home directory for root user)
+        #Not in /home
+/run
+/sys
+/tmp    #Application temporary files
+/usr    #Unix System Resource
+        #Programs installed with the system
+/var    #Variables
+        #Datas frequently rewritten
+        
