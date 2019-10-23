@@ -1,0 +1,7 @@
+#--------------------------DOCKERFILE--------------------------
+
+#Docker can build images automatically by reading the instructions from a Dockerfile.
+#Dockerfile is a text document that contains a list of commands.
+#A user could call on the command line to assemble an image
+
+#Example

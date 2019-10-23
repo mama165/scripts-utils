@@ -1,7 +1,104 @@
 #--------------------------DOCKER--------------------------
 
+#Current version
+version 19.03
+
+#All commands (from this file) :  
+    docker version
+    docker image
+    docker rmi
+    docker build
+    docker rm
+    docker search
+    docker info
+    docker pull
+    docker ps
+    docker run
+    docker attach
+    docker stop
+    docker kill
+    docker events
+    docker cp
+    docker exec
+    docker network
+    docker tag
+
+#Next commands
+    docker tag
+    docker commit
+    docker pull
+    docker push
+    docker login
+    docker logs
+    docker prune
+
 #Check for version
 docker --version
+
+#Display all images
+docker images
+
+#Delete an image with ID fd484f19954f
+docker rmi fd484f19954f
+#If image has multiple tags
+#You'll have this
+#Output :
+    Error: Conflict, cannot delete image fd484f19954f because it is tagged in multiple repositories, use -f to force
+    2013/12/11 05:47:16 Error: failed to remove one or more images
+
+#Delete an image with ID fd484f19954f (forcing)
+#If image has multiple tags
+#Each image wil ve deleted
+docker rmi -f fd484f19954f
+
+#Vocabulary :
+    #REPOSITORY
+    A repository is any group of builds of an image with the same name
+    Where you store 1 or more versions of a docker image versioned with tags
+
+    #REGISTRY
+    Repositories hosting
+    Stores a collection of repositories
+
+#Buid an image from a Dockerfile
+#The Dockerfile is in the current directory
+#"." means that the current directory will be uses as "./" 
+#inside the Dockerfile instructions...
+docker build .
+
+#Build an image from a Dockerfile with name ninja
+#The Dockerfile is in the current directory
+docker build -t <IMAGENAME> .
+docker build -t ninja .
+
+#Build an image from Dockerfile located in /path/to/a/Dockerfile
+docker build -f /path/to/a/Dockerfile .
+
+#Build an image from Dockerfile.debug
+docker build -f <DOCKERFILENAME> <context>
+docker build -f Dockerfile.debug .
+
+#Example
+#The commands will build  the current context (as specified by the .)
+#Once using a debug version of a Dockerfile
+#Once using a production version of a Dockerfile
+docker build -f dockerfiles/Dockerfile.debug -t myapp_debug .
+docker build -f dockerfiles/Dockerfile.prod  -t myapp_prod .
+
+#IMPORTANT
+docker build ../ #<= WILL FAIL !
+#For security reasons the context is limited to the current directory
+
+#Ignore some files from context
+#The same as .gitignore file
+.dockerignore
+
+#Delete a container
+docker rm
+
+#Delete all containers
+#Get all container IDs (started or stopped) = > docker ps -a -q
+docker rm $(docker ps -a -q)
 
 #Information about containers
 docker info
@@ -12,6 +109,18 @@ docker search elasticsearch
 
 #Retrieve image from docker hub
 docker pull debian
+
+#Display container (started only)
+docker ps
+
+#Display all containers (started or stopped)
+docker ps -a
+
+#Display all containers but prettier (started or stopped)
+docker ps -a --format 'table {{.Names}}\t{{.Image}}'
+
+#Display all container ID
+docker ps -q
 
 #Run a debian image with name "debian_container" in interactive & detached mode
 #Interactive mode : enter in the container directly after that
@@ -53,6 +162,9 @@ docker kill --signal=SIGHUP <container>
 #OR
 docker kill -s
 
+#Kill all containers
+#Get all container IDs => docker ps -q
+docker kill $(docker ps -q)
 
 docker events
 
@@ -81,20 +193,9 @@ docker exec -it <container> -u root sh
 #Displays networks between containers
 docker netwkork ls
 
-#--------------------------DOCKER COMPOSE--------------------------
-
-#Check for version
-docker-compose -v
-docker-compose --version
-
-#Run docker services(from docker-compose.yml)
-docker-compose up
-#Detached mode (you won't see any logs)
-docker-compose up -d
-
-
-#Check if config file is correct (from docker-compose.yml)
-docker-compose config
+#Tag a docker image
+docker tag <image> <registry/tag>
+docker tag ubuntu:16.04 localhost:5000/my-ubuntu
 
 #Container processes vs hosts processes
     https://stackoverflow.com/questions/39931316/what-is-the-pid-in-the-host-of-a-process-running-inside-a-docker-container

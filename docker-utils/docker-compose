@@ -1,0 +1,13 @@
+#--------------------------DOCKER COMPOSE--------------------------
+
+#Check for version
+docker-compose -v
+docker-compose --version
+
+#Run docker services(from docker-compose.yml)
+docker-compose up
+#Detached mode (you won't see any logs)
+docker-compose up -d
+
+#Check if config file is correct (from docker-compose.yml)
+docker-compose config
