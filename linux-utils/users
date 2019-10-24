@@ -11,7 +11,7 @@ passwd -e john.wick
 #Add password to user john.wick
 passwd john.wick
 
-#Display all users
+#Display all users (with details)
 less /etc/passwd
 #Output :
        john.wick:x:1000:1000:nice,strong,trustworthy,human:/home/john.wick:/bin/bash
@@ -23,6 +23,61 @@ less /etc/passwd
            |     |   User ID (UID  for example 0 is reserved for root)
            |     Encrypted password indicator (stored in /etc/shadow | sometimes * instead of x)
            Username
+
+#Display current user and groupe names and IDs
+id
+#Output
+uid=1000(john.wick) gid=1000(john.wick) groups=1000(john.wick)
+
+#Display UID of user john.wick
+id -u john.wick
+
+#Display GID of user john.wick
+id -g john.wick
+
+#Display UID and all groups of user
+id john.wick
+#Output
+#john.wick belongs to group ansible, admin
+uid=1000(john.wick) gid=1000(john.wick) groups=1000(john.wick), 4(ansible), 5(admin)
+
+
+#Change username from john.wick to brian.mills
+#Nothing else will be changed
+#You should probably change the home directory name
+usermod -l brian.mills john.wick
+
+#Change UID of user john.wick
+#Must be unique, non negative
+#Any files the user owns
+#And located under the user's home directory tree rooted
+#Will have the file UID changed automatically
+#Files outside the user's home directory must be altered manually
+usermod -u 1001 john.wick
+
+#Change information about a user
+chfn john.wick
+
+#Display all users (only names)
+cut -d: -f1 /etc/passwd
+
+#Display the minimum UID for users (non system)
+#Only those users can login into system
+#Only if shell is bash/csh/tcsh/ksh... as defined in /etc/shells
+#Example : UID_MIN = 1000 => users with UID => 1000 can login
+grep "^UID_MIN" /etc/login.defs
+
+#Display the maximum UID for users (non system)
+grep "^UID_MAX" /etc/login.defs
+
+#Display all users (non system)
+#Only if shell is bash/csh/tcsh/ksh...
+    l=$(grep "^UID_MIN" /etc/login.defs)
+    l1=$(grep "^UID_MAX" /etc/login.defs)
+    awk -F':' -v "min=${l##UID_MIN}" -v "max=${l1##UID_MAX}" '{ if ( $3 >= min && $3 <= max ) print $0}' /etc/passwd
+#Output
+    john.wick:x:1000:1000::/home/john.wick:/bin/bash
+    brian.mills:x:1001:1001::/home/brian.mills:/bin/bash
 
 #Check integrity of passw or shadow
 pwck -r

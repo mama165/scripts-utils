@@ -2,3 +2,39 @@
 
 #Compare two files
 diff expected.txt output.txt
+
+#Display content of file
+cat foot.txt
+
+#Display content of file (with numbers)
+cat -n foot.txt
+#Example
+#Create a new file with numbers
+cat -n foo.txt > bar.txt
+
+#Display content (with special characters)
+#Windows add some special characters for example
+#sed -i -e 's/\r$//' <= clean file
+#https://askubuntu.com/questions/304999/not-able-to-execute-a-sh-file-bin-bashm-bad-interpreter
+cat -A foo.txt
+
+#
+ls path/to/directory
+
+#Display list of hidden files/directories
+ls -a path/to/directory
+
+#Display a detailed list of files/directories
+ls -l path/to/directory
+#OR
+ll path/to/directory
+
+#
+ls -n path/to/directory
+
+#Display list of files/directories
+#"/" at the end of output distinguishes files from directories
+ls -p path/to/directory
+
+#Display recursively
+ls -R path/to/directory
