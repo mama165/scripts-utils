@@ -94,7 +94,11 @@ docker build ../ #<= WILL FAIL !
 .dockerignore
 
 #Delete a container
-docker rm
+docker rm <CONTAINERID>
+
+#Delete a container (forcing)
+#Needed if the container is running
+docker rm -f <CONTAINERID>
 
 #Delete all containers
 #Get all container IDs (started or stopped) = > docker ps -a -q
@@ -130,7 +134,6 @@ docker ps -q
 docker run -it -d -p 9000:80 --name=debian_container1 debian
 #Output :
 root@9254e01fadad
-
 
 #BE CAREFUL WITH DETACHED MODE !!
 #A container started in detached mode exits when the run process exits
