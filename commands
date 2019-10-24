@@ -1,0 +1,164 @@
+#--------------------------PACKAGE--------------------------
+#What's a package ?
+#Archive containing files, information for the OS
+#Different type of systems => RPM
+
+#CentOS
+#YUM => Yellowdog Updater, Modified
+#Type => RPM
+#Centos 8 last version
+
+#DEBIAN
+#DPKG
+
+#RHEL
+#Type => RPM
+
+#Install a package
+yum install <package>
+
+#Remove a package
+yum remove <package>
+#Update a package
+yum update <package>
+
+# Update distrib
+# Never upgrade on major version
+# If I'm on CentOS 4 (an old version, I won't be on CentOS 5)
+yum update
+
+#Repo yum
+#Must be added in yum configuration file
+/etc/yum.repos.d
+
+#--------------------------SUDO--------------------------
+#Change to root
+
+#Difference between "su -" and "su"
+#Land in home directory (defined in /etc/passwd)
+
+#Switch from user brian mills to user john wick
+#sudo is needed
+#Land in home directory (defined in /etc/passwd)
+sudo su - john.wick
+#OR
+#Land in /
+sudo su john.wick
+
+#Switch from root to user john wick
+#sudo is not needed
+#Land in home directory (defined in /etc/passwd)
+su - john.wick
+#OR
+#Land in / directory
+su john.wick
+
+#https://www.starmate.fr/configurer-sudo-pour-un-utilisateur-sur-centosredhat/
+#Add user to group wheel
+#wheel is a default sudoers group
+#Edit file /etc/sudoers
+visudo
+#OR
+#Add a user john to sudoers
+vi /etc/sudoers <=  John      ALL=(ALL) ALL
+
+#--------------------------SSH--------------------------
+#Protocol=> TCP TLS / Port => 22
+
+#Service SSH
+systemctl status sshd
+
+#Key generation
+ssh-keygen -b 4096
+
+#Prevent login SSH root (distant server)
+#/etc/ssh/sshd_config =>
+PermitRootLogin no
+
+#Configs ssh
+#Global (en root)
+/etc/.ssh/ssh_config
+
+#Local
+~/.ssh/ssh_config
+
+#Example
+#IP 192.168.10.20 uses port 4242 and domain abc123.com uses port 15000
+
+#Answer
+Host 192.168.10.20
+Port 4242
+
+Host * abc123.com
+Port 15000
+
+#Example
+#Adress mydomain.com uses port 4242 and user john
+#Goal : ssh server-app-01
+
+#Answer
+Host server-app-01
+     HostName mydomain.com
+     User john
+     Port 4242
+#WHY NOT ?
+Host server-app-02
+     HostName myserver.com
+     User paul
+     Port 4545
+
+#Signature / Man in the Middle
+~/.ssh/known_hosts
+
+
+#--------------------------CREATION OF VMs--------------------------
+#Go on Vcenter Interface
+#Power on the concerned machine by the IP (that should be given)
+#Fill the form with IP, passerelle, etc.
+#Don't forget about the checkbox for the 5 sec for BIOS to start
+#Generate a password for the root (Python script on bastion machine)
+#Put the key on Pleasant Password Server (PPS)
+#Fill the root password on the machine form field
+
+#Once your machine is created
+#You have a root access on the client machine
+#Run ansible to put your own public ssh key into "installer" authorized key folder (client machine)
+From Bastion  (mael.nana) ~/.ssh/id_dsa.pub => (installer) ~/.ssh/authorized_keys
+
+
+#--------------------------RIGHTS & PERMISSIONS--------------------------
+#https://linux.goffinet.org/05-03-permissions-linux/
+
+
+#If john.wick belongs to users
+#Then when
+touch example.txt
+-rw-rw-r-- <= 664 #Default
+#Belong to john.wick:users
+
+#Add read, write and execution for owner
+#Add read, execution and remove write for group
+#Add read and remove write and execution for others
+#Only possible for root & owner (john.wick) of file
+chmod u+rwx,g+rx-w,o+r-wx example.txt
+
+
+#Give recursively all permissions to owner and read, execution to others
+chmod -R foo
+
+#Change OWNer to toto
+#john.wick owns the file
+#Owner cannot transfer ownership (unless owner is root)
+#Only possible for root
+sudo chown toto example.txt
+
+#Change owner to toto and group to installer
+sudo chown toto:installer example.txt
+
+#CHange GRouP
+#Members from installer can access to example.txt
+#Only possible for root & owner (john.wick) of file
+#Only possible if owner belongs to group
+sudo chown :installer example.text
+#or
+sudo chgrp installer example.txt

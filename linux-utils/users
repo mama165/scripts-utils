@@ -11,26 +11,6 @@ passwd -e john.wick
 #Add password to user john.wick
 passwd john.wick
 
-#Difference between "su -" and "su"
-#Land in home directory (defined in /etc/passwd)
-
-#Switch from user brian mills to user john wick
-#sudo is needed
-#Land in home directory (defined in /etc/passwd)
-sudo su - john.wick
-#OR
-#Land in /
-sudo su john.wick
-
-#Switch from root to user john wick
-#sudo is not needed
-#Land in home directory (defined in /etc/passwd)
-su - john.wick
-#OR
-#Land in / directory
-su john.wick
-
-
 #Display all users
 less /etc/passwd
 #Output :
