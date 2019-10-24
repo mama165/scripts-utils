@@ -4,10 +4,10 @@
 diff expected.txt output.txt
 
 #Display content of file
-cat foot.txt
+cat foo.txt
 
 #Display content of file (with numbers)
-cat -n foot.txt
+cat -n foo.txt
 #Example
 #Create a new file with numbers
 cat -n foo.txt > bar.txt
