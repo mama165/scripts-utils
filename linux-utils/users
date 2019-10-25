@@ -1,15 +1,36 @@
 #--------------------------USERS--------------------------
 
-#Add a user named john.wick
+#Add a user john.wick
 adduser john.wick
 #OR (non-interactive)
 useradd john.wick
 
+#Delete a user john.wick
+deluser john.wick
+
+#Delete a user john.wick
+#And all files own by john.wick in the system
+deluser --remove-home user
+
+#Delete a user john.wick from group ansible
+deluser john.wick ansible
+
 #Force user john.wick to change his password
+#Next time john.wick will login
+#He will be prompted to change his password
 passwd -e john.wick
+#OR
+passwd --expire john.wick
 
 #Add password to user john.wick
 passwd john.wick
+
+#Lock user john.wick
+passwd --lock john.wick
+
+#Display informations about password
+#Such as expiration date
+chage -l john.wick
 
 #Display all users (with details)
 less /etc/passwd
@@ -78,8 +99,12 @@ vi /etc/sudoers
 %wheel        ALL=(ALL)       AL
 
 #Add a user john.wick to group wheel
-#Without removing from the group he is already in
+#Keep group intact
 usermod -aG wheel john.wick
+
+#Add a user john.wick to group wheel
+#Remove users from group and add john.wick
+usermod -a wheel john.wick
 
 #Add a user to sudoers (2)
 #If no /etc/sudoers do (1)
@@ -90,11 +115,13 @@ root ALL=(ALL) ALL
 
 john.wick ALL=(ALL) ALL
 
-
 #Change username from john.wick to brian.mills
 #Nothing else will be changed
 #You should probably change the home directory name
 usermod -l brian.mills john.wick
+
+#Lock user john.wick
+usermod --lock --expiredate 1970-01-01 john.wick
 
 #Example :
     #Switch to user john.wick
@@ -113,6 +140,15 @@ usermod -l brian.mills john.wick
 #Will have the file UID changed automatically
 #Files outside the user's home directory must be altered manually
 usermod -u 1001 john.wick
+
+#Add a group ansible
+groupadd ansible
+
+#Change GID from group ansible
+groupmod -g <GID> ansible
+
+#Delete the group ansible
+delgroup ansible
 
 #Change information about a user
 chfn john.wick
@@ -137,6 +173,6 @@ grep "^UID_MAX" /etc/login.defs
 #Output
     john.wick:x:1000:1000::/home/john.wick:/bin/bash
     brian.mills:x:1001:1001::/home/brian.mills:/bin/bash
-q:q
+
 #Check integrity of passw or shadow
 pwck -r
