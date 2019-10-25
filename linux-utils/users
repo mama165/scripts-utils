@@ -6,14 +6,26 @@ adduser john.wick
 useradd john.wick
 
 #Delete a user john.wick
-deluser john.wick
+userdel john.wick
 
 #Delete a user john.wick
-#And all files own by john.wick in the system
-deluser --remove-home user
+#And all files own by john.wick unde the home directory
+userdel -r john.wick
+#OR
+userdel --remove john.wick
+
+#Delete a user john.wick (force)
+#BE CAREFUL !!!
+#Even if user is stille logged in
+#If a group exists with the same name
+#It will be removed
+#even if it's still a primary group of another user
+userdel -f john.wick
+#OR
+userdel --force john.wick
 
 #Delete a user john.wick from group ansible
-deluser john.wick ansible
+userdel john.wick ansible
 
 #Force user john.wick to change his password
 #Next time john.wick will login
