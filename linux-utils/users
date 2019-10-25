@@ -40,7 +40,13 @@ id john.wick
 #Output
 #john.wick belongs to group ansible, admin
 #We could have a group for windows, linux, network guys...
+#Output
 uid=1000(john.wick) gid=1000(john.wick) groups=1000(john.wick), 4(ansible), 5(admin)
+
+#Display all groups john.wick belongs to
+groups john.wick
+#Output
+john.wick : john.wick ansible admin
 
 #Display groups names of user john.wick
 id -ng john.wick
@@ -53,13 +59,52 @@ id -nu john.wick
 #https://www.cyberciti.biz/faq/understanding-etcgroup-file/
 cat /etc/group
 
-#Display all groups john.wick belongs to
-groups john.wick
+#Display all users from a group ansible
+grep '^ansible:.*$' /etc/group | cut -d: -f4
+
+#Add a user to sudoers (1)
+#No /etc/sudoers
+#Install sudo
+yum install sudo
+#Now /etc/sudoers exists
+visudo
+#OR
+#But be careful file in 440 (read-only)
+vi /etc/sudoers
+
+#CentOS 7 has a default group wheel
+#Members of wheel are automatically sudo
+#Decomment line %wheel if commented
+%wheel        ALL=(ALL)       AL
+
+#Add a user john.wick to group wheel
+#Without removing from the group he is already in
+usermod -aG wheel john.wick
+
+#Add a user to sudoers (2)
+#If no /etc/sudoers do (1)
+#Now /etc/sudoers exists
+visudo
+#Add the following
+root ALL=(ALL) ALL
+
+john.wick ALL=(ALL) ALL
+
 
 #Change username from john.wick to brian.mills
 #Nothing else will be changed
 #You should probably change the home directory name
 usermod -l brian.mills john.wick
+
+#Example :
+    #Switch to user john.wick
+    su - john.wick
+    #List root home directory
+    sudo ls -la /root
+    #OR
+    sudo whoami
+        #Output
+        root
 
 #Change UID of user john.wick
 #Must be unique, non negative
@@ -92,6 +137,6 @@ grep "^UID_MAX" /etc/login.defs
 #Output
     john.wick:x:1000:1000::/home/john.wick:/bin/bash
     brian.mills:x:1001:1001::/home/brian.mills:/bin/bash
-
+q:q
 #Check integrity of passw or shadow
 pwck -r
