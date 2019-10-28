@@ -155,6 +155,7 @@ visudo
 #But be careful file in 440 (read-only)
 vi /etc/sudoers
 
+#Wheel is a group available in all distros from one specific version
 #CentOS 7 has a default group wheel
 #Members of wheel are automatically sudo
 #Decomment line %wheel if commented
