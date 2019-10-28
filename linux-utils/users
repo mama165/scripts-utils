@@ -1,9 +1,28 @@
 #--------------------------USERS--------------------------
 
 #Add a user john.wick
+#Call useradd (perl script...)
 adduser john.wick
 #OR (non-interactive)
+#Command from : /usr/sbin/useradd
 useradd john.wick
+
+#Add a user call john.wick (with group and shell)
+#With home : /home/john.wick
+#With group wheel
+#With shell /bin/sh
+useradd -d /home/john.wick -G wheel -s /bin/sh
+
+#Display default information about useradd
+useradd -D
+#Output
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
 
 #Delete a user john.wick
 userdel john.wick
@@ -27,25 +46,56 @@ userdel --force john.wick
 #Delete a user john.wick from group ansible
 userdel john.wick ansible
 
+#Add password to user john.wick
+passwd john.wick
+
 #Force user john.wick to change his password
 #Next time john.wick will login
 #He will be prompted to change his password
 passwd -e john.wick
-#OR
-passwd --expire john.wick
 
-#Add password to user john.wick
-passwd john.wick
+#Delete password for user john.wick
+passwd -d john.wick
 
 #Lock user john.wick
-passwd --lock john.wick
+#"!" will be added in /etc/shadow
+#No password match possible anymore
+#Root can still access this account
+#SSH connections still possible
+passwd -l john.wick
+#OR
+usermod -L john.wick
+
+#Lock user john.wick (completely)
+#SSH connections impossible
+chage -E 0 john.wick
+
+#Remove previous user john wick expiration date
+chage -E -1 john.wick
+
+#Unlock user john.wick
+#"!" will be removed from /etc/shadow
+#The user can now use his password
+passwd -u john.wick
 
 #Display informations about password
 #Such as expiration date
 chage -l john.wick
 
+#Add a policy on user john.wick
+#Password will be change on the next connection (-d)
+#Password will expire in 20 days (-M)
+#The account will be locked down after 10 days(-I)
+#A warning must be appear 5 days before expiration (-W)
+#Explanation :
+    #If password changed at DateA
+    #User john wick will be locked at DateA+10
+chage -d 0 -M 20 -I 10 -W 5 john.wick
+
 #Display all users (with details)
 less /etc/passwd
+#For system users
+#Shell : /sbin/nologin
 #Output :
        john.wick:x:1000:1000:nice,strong,trustworthy,human:/home/john.wick:/bin/bash
            |     |   |    |    |     |                      |               |
@@ -113,10 +163,15 @@ vi /etc/sudoers
 #Add a user john.wick to group wheel
 #Keep group intact
 usermod -aG wheel john.wick
+#OR
+gpasswd -a john.wick wheel
 
 #Add a user john.wick to group wheel
 #Remove users from group and add john.wick
+#But be careful !!
 usermod -a wheel john.wick
+#OR
+gpasswd -d john.wick wheel
 
 #Add a user to sudoers (2)
 #If no /etc/sudoers do (1)
@@ -131,9 +186,6 @@ john.wick ALL=(ALL) ALL
 #Nothing else will be changed
 #You should probably change the home directory name
 usermod -l brian.mills john.wick
-
-#Lock user john.wick
-usermod --lock --expiredate 1970-01-01 john.wick
 
 #Example :
     #Switch to user john.wick
