@@ -24,9 +24,7 @@ version 19.03
     docker tag
 
 #Next commands
-    docker tag
     docker commit
-    docker pull
     docker push
     docker login
     docker logs
@@ -111,8 +109,14 @@ docker info
 docker search redis
 docker search elasticsearch
 
-#Retrieve image from docker hub
+#Retrieve image (from docker hub)
+#Pull the image with tag "latest"
+#docker pull debian:latest
 docker pull debian
+
+#Retrieve image (from my registry)
+#Registy : myregistry.local (port 5000)
+docker pull myregistry.local:5000/path/to/my/repo/image:tag
 
 #Display container (started only)
 docker ps
@@ -126,12 +130,21 @@ docker ps -a --format 'table {{.Names}}\t{{.Image}}'
 #Display all container ID
 docker ps -q
 
+#Logs from container
+docker logs -f
+
 #Run a debian image with name "debian_container" in interactive & detached mode
 #Interactive mode : enter in the container directly after that
 #Detached mode : no output inside the console (we can continue on the same machine)
 #the same as a ssh connection or going inside a VM
 #Port 9000 on host is connected to port 80 on container
-docker run -it -d -p 9000:80 --name=debian_container1 debian
+#Explanation :
+    #1.If you don't have the image locally, docker pulls it from the registry
+    #2.Docker creates a new container
+    #3.Docker allocates  a read-write filesystem to the container
+    #4.Docker creates a networf interface to connect the container to the defaukt network
+    #5.Docker starts the container and executes /bin/bash (interactive mode)
+docker run -it -d -p 9000:80 --name=debian_container1 debian /bin/bash
 #Output :
 root@9254e01fadad
 
@@ -200,6 +213,23 @@ docker netwkork ls
 docker tag <image> <registry/tag>
 docker tag ubuntu:16.04 localhost:5000/my-ubuntu
 
+#Commit a container with id c3f279d17e0a
+#Won't keep the mounted volumes
+docker commit c3f279d17e0a repo/myimage:version2
+#Output
+f5283438590d
+#Explanation :
+    docker images
+    #Output
+    REPOSITORY                        TAG                 ID                  CREATED             SIZE
+    repo/myimage                      version3            f5283438590d        15 seconds ago      100 MB
+
+#Push an image or a repository to a registry
+#Registry : localhost:5000
+docker push localhost:5000/repo/myimage:version2
+#URL to find your repositories :
+http://localhost:5000/v2/_catalog
+
 #Container processes vs hosts processes
     https://stackoverflow.com/questions/39931316/what-is-the-pid-in-the-host-of-a-process-running-inside-a-docker-container
 #Example
@@ -240,3 +270,6 @@ docker tag ubuntu:16.04 localhost:5000/my-ubuntu
 (ps -ef | grep $(docker inspect --format '{{.State.Pid}}' php-sandbox) | awk '{print $2}') ; do grep NSpid: /proc/$i/status ; done
 #OR
 for i in $(ps -ef | grep `docker inspect --format '{{.State.Pid}}' containerID` | awk '{print $2}') ; do grep NSpid: /proc/$i/status ;
+
+#SECURITY
+https://github.com/docker/docker-bench-security
