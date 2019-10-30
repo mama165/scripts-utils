@@ -138,6 +138,11 @@ id -nG john.wick
 #OR
 id -nu john.wick
 
+#Find user by his UID
+id -nu 1000
+#Output
+john.wick
+
 #Display all groups from system
 #https://www.cyberciti.biz/faq/understanding-etcgroup-file/
 cat /etc/group

@@ -10,3 +10,29 @@ uname -mrs
 
 #Display information about CPU | THREAD | CORES
 lscpu
+
+#set vs env
+
+#Display all environment variables of user john.wick
+printenv
+
+#Find current user Shell
+printenv SHELL
+
+#Display directory where shell find all commands
+echo $PATH
+
+#Add a new directory for commands (temporary)
+PATH=$PATH:/path/to/command
+
+#Add a new directory for commands (definitively)
+cat ~/.bashrc
+export PATH=$PATH:/path/to/other/command
+
+#Check if an editor (vi, vim or nano) is installed
+echo $EDITOR
+
+#Display home of current user
+echo $HOME
+#OR
+echo ~
