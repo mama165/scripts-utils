@@ -1,7 +1,32 @@
 #--------------------------DOCKER--------------------------
 
-#Current version
-version 19.03
+#Questions :
+    What is Docker ?
+        #It's a cliet-server architecture
+        #The daemon is a server and the CLI is one of many clients
+        #With the client you manage different components
+        #Such as images, containers, networks and data volumes...
+        #The key take away : client and daemon doesn't need to be on the same box
+
+    What is docker daemon ?
+        #Docker Daemon is a server which interacts with the operating system and performs all kind of services
+        #The Docker Daemon listens for REST API request and performs the operations
+
+    Who pull and run the image ? Client or daemon ?
+        #The client only tells the daemon that a he wants to pull an image to the remote host
+        #This remote host is the same computer where daemon is running
+        #Client can connect to various daemons and pull images in each one but the image will be saved on daemon's host
+
+    What is the current version ?
+    #version 19.03
+
+#Example :
+
+    CLIENT                  DOCKER_HOST                  REGISTRY
+    docker build            container 1                   image 1
+    docker pull             container 2                   image 1
+    docker run              container 3                   image 1
+    ...                     ...
 
 #All commands (from this file) :  
     docker version
@@ -133,7 +158,7 @@ docker ps -q
 #Logs from container
 docker logs -f
 
-#Run a debian image with name "debian_container" in interactive & detached mode
+#Run a debian image with name "debian_container" in interactive & tty & detached mode
 #Interactive mode : enter in the container directly after that
 #Detached mode : no output inside the console (we can continue on the same machine)
 #the same as a ssh connection or going inside a VM
@@ -144,6 +169,7 @@ docker logs -f
     #3.Docker allocates  a read-write filesystem to the container
     #4.Docker creates a networf interface to connect the container to the defaukt network
     #5.Docker starts the container and executes /bin/bash (interactive mode)
+    #https://medium.com/devopsion/life-and-death-of-a-container-146dfc62f808
 docker run -it -d -p 9000:80 --name=debian_container1 debian /bin/bash
 #Output :
 root@9254e01fadad
@@ -197,7 +223,12 @@ docker cp foo.txt nginx:~foo.txt
 #docker cp <container_name>:<SRC_PATH> <DEST_PATH>
 docker cp nginx:~foo.txt foo.txt
 
+#Execute a command inside the container
+#With tty & interactive mode
+docker exec -it <container> <shell>
+
 #Connect as root
+#To do that we execute the shell
 docker exec -it <container> -u root /bin/bash
 #or
 docker exec -it <container> -u root bash
@@ -215,6 +246,7 @@ docker tag ubuntu:16.04 localhost:5000/my-ubuntu
 
 #Commit a container with id c3f279d17e0a
 #Won't keep the mounted volumes
+#https://tuhrig.de/difference-between-save-and-export-in-docker/
 docker commit c3f279d17e0a repo/myimage:version2
 #Output
 f5283438590d
@@ -281,3 +313,16 @@ https://github.com/docker/docker-bench-security
 #In the Dockerfile
 RUN useradd -d /home/john.wick -m -s /bin/bash john.wick
 USER john.wick
+
+#PERMISSION MANAGEMENT
+https://blog.ippon.tech/docker-and-permission-management/
+
+#--------------------------STORAGE--------------------------
+https://dev.pierre-galvez.fr/modifier-lemplacement-des-donnees-de-docker/
+https://docs.docker.com/storage/storagedriver/
+
+#Docker daemon directory
+#(Linux)
+/var/lib/docker
+#Windows
+C:\ProgramData\docker
