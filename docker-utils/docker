@@ -326,3 +326,18 @@ https://docs.docker.com/storage/storagedriver/
 /var/lib/docker
 #Windows
 C:\ProgramData\docker
+
+#--------------------------SERVICE--------------------------
+#https://success.docker.com/article/using-systemd-to-control-the-docker-daemon
+
+#Enable the daemon to start at boot time 
+systemctl enable docker
+
+#Disable the daemon to start at boot time 
+systemctl disable docker
+
+#Viewing logs about the docker service
+journalctl -u docker
+
+#--------------------------PRACTICE--------------------------
+https://docker.cdn.prismic.io/docker%2Fa2d454ff-b2eb-4e9f-af0e-533759119eee_dca+study+guide+v1.0.1.pdf
