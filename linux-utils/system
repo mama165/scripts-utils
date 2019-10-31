@@ -36,3 +36,14 @@ echo $EDITOR
 echo $HOME
 #OR
 echo ~
+
+#--------------------------SERVICE--------------------------
+#https://www.cyberciti.biz/faq/check-running-services-in-rhel-redhat-fedora-centoslinux/
+
+#Systemd replaced initd
+
+#List all services (Debian)
+service --status-all
+
+#List all services (Centos 7)
+systemctl list-unit-files
