@@ -37,7 +37,7 @@ yum update
 #Difference between "su -" and "su"
 #Land in home directory (defined in /etc/passwd)
 
-#Switch from user brian mills to user john wick
+#Switch from user bryan mills to user john wick
 #sudo is needed
 #Land in home directory (defined in /etc/passwd)
 sudo su - john.wick

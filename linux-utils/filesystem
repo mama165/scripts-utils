@@ -1,6 +1,7 @@
 #--------------------------BASTION--------------------------
 #https://doc.ubuntu-fr.org/arborescence
 
+
 #Racine /
 /boot #bootstrap
       #Static files (bootloader, Kernel, Grub, ramdisk image...)
@@ -44,3 +45,5 @@
 /var    #Variables
         #Datas frequently rewritten
         
+
+Voir : http://www.linux-france.org/article/sys/fichiers/fichiers-2.html

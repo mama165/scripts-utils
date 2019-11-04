@@ -3,6 +3,23 @@
 #Display processus
 ps -aef
 
+#Output
+UID          PID  PPID  C STIME      TTY     TIME    COMMAND  
+root         1    0     0 Dec 6      ?       1:02    init  
+...  
+john.wick    319 300    0 10:30:30   ?       0:02    /usr/dt/bin/dtsession  
+bryan.mills  321 319    0 10:30:34   ttyp1   0:02    csh  
+jason.bourne 324 321    0 10:32:12   ttyp1   0:00    ps -ef
+
+#UID : userID of the process
+#PID : processID
+#PPID : parent processID
+#C : priority factor
+#STIME :  Date of birth
+#TTY : terminal name
+#TIME : time since processus running
+#COMMAND : name of processus.
+
 #Display all current processes
 ps ax | less
 
@@ -11,3 +28,40 @@ ps ax | less
 # -p : pid of the process
 pstree
 pstree -up | less
+
+
+#What is a daemon ?
+An process running in background and not interactive (no TTY)
+They are the processes which run in the background and are not interactive. They have no controlling terminal
+They perform certain actions at predefined times or in response to certain events
+
+#Example
+    initd
+    systemd
+    dockerd
+    somethingd
+
+#What is a process ?
+One or more threads of execution together with their shared set of resources.
+
+#Example
+    A shell script or a cmd (background or foreground for performance)
+
+#What is a service ?
+A service can be multiple processes
+#Example
+    httpd is a service
+    But you can have 10-20 apache processes runnning in background (handling requests)
+    ssh, web server, database server, system logger
+
+#What is a socket ?
+Inter-process communication (IPC) mechanism that allows bidirectional data exchange between processes.
+
+#What is a Unix socket ?
+Inter-process communication (IPC) running on the same host.
+Use the filesystem
+#Example
+/var/run/docker.sock (for docker)
+
+#What is an IP socket ?
+IPC running over the network (often TCP/IP)

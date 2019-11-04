@@ -188,10 +188,10 @@ root ALL=(ALL) ALL
 
 john.wick ALL=(ALL) ALL
 
-#Change username from john.wick to brian.mills
+#Change username from john.wick to bryan.mills
 #Nothing else will be changed
 #You should probably change the home directory name
-usermod -l brian.mills john.wick
+usermod -l bryan.mills john.wick
 
 #Example :
     #Switch to user john.wick
@@ -242,7 +242,7 @@ grep "^UID_MAX" /etc/login.defs
     awk -F':' -v "min=${l##UID_MIN}" -v "max=${l1##UID_MAX}" '{ if ( $3 >= min && $3 <= max ) print $0}' /etc/passwd
 #Output
     john.wick:x:1000:1000::/home/john.wick:/bin/bash
-    brian.mills:x:1001:1001::/home/brian.mills:/bin/bash
+    bryan.mills:x:1001:1001::/home/bryan.mills:/bin/bash
 
 #Check integrity of passw or shadow
 pwck -r

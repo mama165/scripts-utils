@@ -47,3 +47,5 @@ service --status-all
 
 #List all services (Centos 7)
 systemctl list-unit-files
+
+#journalctl
