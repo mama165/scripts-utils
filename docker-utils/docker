@@ -20,6 +20,17 @@
     What is the current version ?
     #version 19.03
 
+    Where can we find the docker daemon ?
+    #https://medium.com/better-programming/about-var-run-docker-sock-3bfd276e12fd
+    #The daemon listens the unix socket : /var/run/docker.sock (by default)
+    #Containers can use it to communicate with the daemon
+    
+    #Example
+    #docker container run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
+    #Portainer can be used as container manager (container monitoring others)
+
+
+
 #Example :
 
     CLIENT                  DOCKER_HOST                  REGISTRY
