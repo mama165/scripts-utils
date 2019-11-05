@@ -1,0 +1,68 @@
+#--------------------------PACKAGE MANAGEMENT--------------------------
+
+#Different type of systems => RPM
+
+#CentOS
+#YUM => Yellowdog Updater, Modified
+#Type => RPM
+#Centos 8 last version
+
+#https://www.tecmint.com/linux-package-management/
+
+#What's a package ?
+A set of programs
+
+#What is Package Management ?
+Method of installing, updating, removing and maintaining softwares on the system.
+
+#Why is there Package Management ?
+Before, programs were distributed as source code, with man pages, configuration files...
+Nowadays, Linux distributors use pre-built programs or packages...
+These programs are presented to users ready for installation on that distribution.
+
+#How Package Management works ?
+Its all about dependencies.
+If a certain package requires a certain resource such as a shared library, or another package, it is said to have a dependency. 
+All modern package management systems provide some method of dependency resolution to ensure that when a package is installed, all of its dependencies are installed as well.
+
+#What is YUM ?
+Yum (Yellowdog Updater Modified) is an open source tool for automating package maintenance
+for a network of workstations running any operating system that use the Red Hat Package Management (RPM) system 
+for distributing packaged tools and applications.
+
+#What is a YUM repository ?
+A yum repository is a collection of RPM packages with metadata that is readable by the yum command line tool.
+It allows us to perform package install, removal, upgrade and operations on individual packages or group of packages.
+Yum repositories are essential for storing, managing, and delivering software to end systems.
+
+
+#What are the package tools ?
+In order to perform the task of package management effectively, you need to be aware that you will have two types of available utilities: low-level tools (which handle in the backend the actual installation, upgrade, and removal of package files), and high-level tools (which are in charge of ensuring that the tasks of dependency resolution and metadata searching -”data about the data”- are performed).
+
+DISTRIBUTION	            LOW-LEVEL TOOL	        HIGH-LEVEL TOOL
+Debian and derivatives	         dpkg	           apt-get / aptitude
+CentOS	                         rpm	                  yum
+
+
+#DEBIAN
+#DPKG
+
+#RHEL
+#Type => RPM
+
+#Install a package
+yum install <package>
+
+#Remove a package
+yum remove <package>
+#Update a package
+yum update <package>
+
+# Update distrib
+# Never upgrade on major version
+# If I'm on CentOS 4 (an old version, I won't be on CentOS 5)
+yum update
+
+#Repo yum
+#Must be added in yum configuration file
+/etc/yum.repos.d

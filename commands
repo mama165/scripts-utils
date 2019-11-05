@@ -1,36 +1,3 @@
-#--------------------------PACKAGE--------------------------
-#What's a package ?
-#Archive containing files, information for the OS
-#Different type of systems => RPM
-
-#CentOS
-#YUM => Yellowdog Updater, Modified
-#Type => RPM
-#Centos 8 last version
-
-#DEBIAN
-#DPKG
-
-#RHEL
-#Type => RPM
-
-#Install a package
-yum install <package>
-
-#Remove a package
-yum remove <package>
-#Update a package
-yum update <package>
-
-# Update distrib
-# Never upgrade on major version
-# If I'm on CentOS 4 (an old version, I won't be on CentOS 5)
-yum update
-
-#Repo yum
-#Must be added in yum configuration file
-/etc/yum.repos.d
-
 #--------------------------SUDO--------------------------
 #Change to root
 

@@ -1,1 +1,32 @@
 #--------------------------NETWORK--------------------------
+
+https://berb.github.io/diploma-thesis/original/
+
+#Explanation
+When a client process wants to connect a server, the client must have a way of identifying the server that it wants to connect.
+If the client knows the IP address (32-bit or 4 bytes) of the host on which the server resides, it can contact that host.
+    #How does the client identify the particular server process running on that host?
+        To resolve the problem of identifying a particular server process running on a host, both TCP and UDP have defined a group of well-known ports.
+        #What is a port ?
+        For our purpose, a port is an integer number between 1024 and 65535.
+        Port numbers < 1024 are considered well-known
+        #Example :
+        telnet : port 23
+        http   : port 80
+        ftp    : port 21
+        ssh    : port 22
+        smtp   : port 25 / port 587
+        #Where can I find information about port assignments to network services ?
+        /etc/services
+
+#Check if a port is opened
+netstat -ntupl (deprecated)
+ss -ntupl
+#Output
+
+#CentOS
+#Install netstat
+#https://www.ostechnix.com/linux-troubleshooting-netstat-command-not-found-in-centos-7-rhel-7/
+#https://mag.fedora-fr.org/wiki/Utilisation_de_YUM_:_Allons_plus_loin
+yum provides */netstat
+yum install net-tools
