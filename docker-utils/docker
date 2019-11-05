@@ -248,8 +248,34 @@ docker exec -it <container> -u root /bin/sh
 #or
 docker exec -it <container> -u root sh
 
+#Show disk space used by docker daemon
+docker system df
+#Output
+#Network information is not shown because it doesn’t consume the disk space.
+TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
+Images              10                  4                   4.837GB             3.27GB (67%)
+Containers          5                   4                   9.413GB             223.1MB (2%)
+Local Volumes       15                  3                   5.801GB             654.4MB (11%)
+Build Cache         0                   0                   0B                  0B
+
+#Print information in a custom file
+docker system df --verbose > docker.stats-YYYY-MM-DD.log
+
+#Show docker disk usage (verbose)
+docker system df -v
+
+#Remove unused containers (stopped), networks, cache
+#Volumes are not removed
+docker system prune
+
+#Remove unused containers (stopped), networks, cache (with volumes)
+docker system prune -a --volumes
+
+#Show information about docker system
+docker system info
+
 #Displays networks between containers
-docker netwkork ls
+docker network ls
 
 #Tag a docker image
 docker tag <image> <registry/tag>

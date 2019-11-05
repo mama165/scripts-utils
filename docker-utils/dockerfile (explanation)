@@ -1,7 +1,60 @@
 #--------------------------DOCKERFILE--------------------------
 
-#Docker can build images automatically by reading the instructions from a Dockerfile.
-#Dockerfile is a text document that contains a list of commands.
-#A user could call on the command line to assemble an image
+#Wha is a Dockerfile ?
+A text file that defines a Docker image.
+You can use it to create our own custom Docker image.
+Used when existing images do not satisfy you project needs.
+Docker can build images automatically by reading the instructions from a Dockerfile.
 
 #Example
+
+
+
+#Add one or more individual labels
+LABEL com.example.version="0.0.1-beta"
+LABEL vendor1="ACME Incorporated"
+
+
+#Create an image from alpine 3.4 with vim, curl
+FROM alpine:3.4
+
+RUN apk update
+RUN apk add vim
+RUN apk add curl
+
+#How to run an image from nothing ?
+FROM scratch
+...
+
+#Instructions
+FROM 
+    Every Dockerfile starts with FROM, with the introduction of multi-stage builds as of version 17.05
+    You can have more than one FROM instruction in one Dockerfile.
+USER
+    Specify a user for running instructions (default is root)
+COPY (prefered)
+    #This feature was added after ADD feature
+    Add directories and files to your Docker image in the form of ADD <src>... <dest> or COPY <src>... <dest>
+    Provide a straightforward, rock solid solution for copying files and directories into your container’s file system
+ADD
+    Add directories and files to your Docker image in the form of ADD <src>... <dest> or COPY <src>... <dest>
+    can pull files from url sources
+    extract compressed files assuming it can recognize and handle the format
+ENV
+    Setting environment variables.
+RUN 
+    Allows you to install your application and packages required for it. 
+    It executes any commands on top of the current image and creates a new layer by committing the results.
+    Often you will find multiple RUN instructions in a Dockerfile.
+    #Example: yum install vim
+VOLUME
+    Another source of confusion, what’s the difference between Dockerfile VOLUME and container volumes?
+USER
+    when root is too mainstream.
+WORKDIR 
+    set the working directory.
+EXPOSE
+    get your ports right.
+ONBUILD
+    give more flexibility to your team and clients.
+CMD
