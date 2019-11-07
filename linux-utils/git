@@ -48,6 +48,13 @@ git add .
 #Undo git add
 git reset
 
+#Undo last commit
+#If you have NOT pushed your changes to remote
+#Delete all different commits from local to HEAD
+git reset HEAD~1
+#If you have pushed your changes to remote
+git revert HEAD
+
 #Your are working on a local branch feature
 #You want to put all your changes from master
 #You need to update your local branch feature
