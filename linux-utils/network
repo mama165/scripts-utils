@@ -1,3 +1,28 @@
+#--------------------------PROTOCOL--------------------------
+https://linux.goffinet.org/11-01-introduction-a-tcp-ip/#1-protocoles-internet
+
+#What is a protocol ?
+Rules of communication possible.
+They define a common language clients use to find each other, connect and transport informations
+
+#What is an IP adress ?
+#Transmission Control Protocol/Internet Protocol
+TCP/IP is a suite of communication protocols used to interconnect network devices on the internet.
+TCP/IP can also be used as a communications protocol in a private network (an intranet or an extranet).
+TCP/IP specifies how data is exchanged over the internet by providing end-to-end communications.
+Those communications identify how it should be broken into packets, addressed, transmitted, routed and received at the destination.
+TCP/IP requires little central management, and it is designed to make networks reliable, with the ability to recover automatically from the failure of any device on the network.
+
+IP defines how to address and route each packet to make sure it reaches the right destination.
+Each gateway computer on the network checks this IP address to determine where to forward the message.
+
+#How TCP/IP works ?
+TCP/IP uses the client/server model of communication 
+        => A user or machine (client) is provided a service (like sending a webpage) by another computer (a server) in the network.
+        => Classified as stateless
+        => Meaning each client request is considered unrelated to previous requests
+
+
 #--------------------------NETWORK--------------------------
 
 https://berb.github.io/diploma-thesis/original/
