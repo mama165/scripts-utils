@@ -7,8 +7,11 @@ git commit -m "wip: first commit"
 git remote add origin git@github.com:mama165/docker-utils.git
 git push --set-upstream origin master
 
+#Get all changes from remote (working directory unchanged)
+git fetch origin master
+
 #Get all changes from remote (with merge commit)
-#Issuing a git fetch + girt merge
+#Issuing a git fetch + git merge
 git pull
 
 #Get all changed from remote (without merge commit)
@@ -86,3 +89,11 @@ git revert HEAD
     #adding the feature on master branch
     #Be careful when pushing all changes
     git push --force
+
+#Display commit history (from local)
+git log
+#OR
+git log master
+
+#Display commit history (from remote)
+git log origin/master
