@@ -1,0 +1,25 @@
+#--------------------------HTTPS--------------------------
+
+#How does an HTTP connection works ?
+#https://www.youtube.com/watch?v=Fqvo6M2d5IQ
+
+Alice : server
+Bob : client
+Smith : certification authority
+
+Before Bob (client) establishes a connection with Alice (server)
+    Alice generates a (public,private) key.
+    Alice sends public key to Smith.
+    Smith checks Alice identity.
+    Smith signs Alice public key with his private key and create a certificate.
+    Alice receives the certificate.
+
+After
+    Bob needs a secure connection
+    Alice sends the certificate (contains the public key).
+    Bob checks if certificate has been signed by Smith (root certificate).
+    Bob gets Alice public key from the certificate.
+    Bob generates a symetric key.
+    Bob crypts the key with Alice public key.
+    Bob send the key to Alice.
+    Alice decrypts the key (previously crypted with the public key) with the private key

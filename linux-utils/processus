@@ -1,4 +1,5 @@
 #--------------------------PROCESSUS--------------------------
+#http://wawadeb.crdp.ac-caen.fr/iso/tmp/ressources/linux/www.ac-creteil.fr/reseaux/systemes/linux/processus.html
 
 #Display processus
 ps -aef
@@ -22,6 +23,31 @@ jason.bourne 324 321    0 10:32:12   ttyp1   0:00    ps -ef
 
 #Display all current processes
 ps ax | less
+
+#Display the process ID of a running program
+pidof dockerd
+#Output
+656
+
+#Count httpd processes
+pidof httpd | wc -w
+#OR
+pgrep -c 'httpd|apache2'
+#Output
+21
+
+#Start in background (killed when terminal exit)
+<command> &
+#Example
+sleep 3000 &
+#Output
+8276
+
+#Display information about the previous background process
+ps -p 8276
+#Output
+PID     TTY     TIME        CMD
+8276    pts/1   00:00:00    sleep
 
 #Display processes (ancestors to children)
 # -u : user who launched it

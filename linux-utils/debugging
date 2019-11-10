@@ -1,0 +1,32 @@
+#--------------------------DEBUGGING--------------------------
+
+#Attach strace to an existing processus
+pidof sshd
+#Output
+6177
+
+strace -p 6177
+#Output
+    Process 6177 attached - interrupt to quit
+    select(7, [3 4], NULL, NULL, NULL
+
+#Connect to a server
+ssh 192.168.1.14
+strace -p 6177
+#Output
+    Process 6177 attached - interrupt to quit
+    select(7, [3 4], NULL, NULL, NULL)      = 1 (in [3])
+    accept(3, {sa_family=AF_INET, sin_port=htons(45468), sin_addr=inet_addr("192.168.1.23")}, [16]) = 5
+    fcntl(5, F_GETFL)                       = 0x2 (flags O_RDWR)
+    pipe([6, 7])                            = 0
+    socketpair(PF_FILE, SOCK_STREAM, 0, [8, 9]) = 0
+    clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7f22b8b91a90) = 12420
+    close(7)                                = 0
+    write(8, "\0\0\2\263\0", 5)             = 5
+    write(8, "\0\0\2\252\n\n\n\nPort 22\n\n\n\nProtocol 2\n\nH"..., 690) = 690
+    close(8)                                = 0
+    close(9)                                = 0
+    close(5)                                = 0
+    select(7, [3 4 6], NULL, NULL, NULL)    = 1 (in [6])
+    close(6)                                = 0
+    select(7, [3 4], NULL, NULL, NULL
