@@ -40,7 +40,49 @@ echo ~
 #--------------------------SERVICE--------------------------
 #https://www.cyberciti.biz/faq/check-running-services-in-rhel-redhat-fedora-centoslinux/
 
-#Systemd replaced initd
+#What is systemd ?
+systemd will manage services.
+It initializes user space components that run after the linux kernel has booted.
+As well as continuously maintaining those components throughout a system’s lifecycle.
+
+#What is systemctl ?
+systemctl is a controlling interface and inspection tool for the widely-adopted init system and service manager systemd.
+
+#Start a service
+systemctl start docker
+#OR
+systemctl start docker.service
+
+#Stop a service
+systemctl stop docker
+#OR
+systemctl stop docker.service
+
+#Restart a service
+systemctl restart docker
+
+#Reload a service configuration (doesn't restart)
+systemctl reload docker
+
+#Enable a service at boot (not started)
+systemctl enable docker
+
+#Enable a service at boot (start in current session)
+systemctl enable docker --now
+
+#Disable a sevrice at boot
+systemctl disable docker
+
+#Check a service's status
+systemctl status mysql
+#Output
+   ● mysql.service - MySQL Community Server
+      Loaded: loaded (/lib/systemd/system/mysql.service; enabled; vendor preset: enabled)
+      Active: active (running) since Thu 2018-08-30 09:15:35 EDT; 1 day 5h ago
+    Main PID: 711 (mysqld)
+        Tasks: 31 (limit: 2319)
+      CGroup: /system.slice/mysql.service
+              └─711 /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
 
 #List all services (Debian)
 service --status-all
@@ -48,4 +90,6 @@ service --status-all
 #List all services (Centos 7)
 systemctl list-unit-files
 
-#journalctl
+#View all the logs in your journal
+#Created by systemd
+journalctl
