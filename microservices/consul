@@ -1,0 +1,26 @@
+#--------------------------CONSUL--------------------------
+
+#https://devopscube.com/consul-service-discovery-beginners-guide/
+
+#What is Consul ?
+Consul is a cluster management tool from Hashicorp.
+It is very useful for creating advanced micro-services architecture.
+
+#Main features ?
+Distributed configuration system
+High availability
+Multi-data center
+Service discovery
+High fault tolerance
+Health check
+
+#How does it work ?
+Consul is an agent-based tool running within the nodes where services are running.
+
+Consul is a
+
+#What about UI ?
+A client agent can user for UI and query the information about the cluster of servers.
+
+#Where can I found a demo ?
+https://demo.consul.io/ui/
