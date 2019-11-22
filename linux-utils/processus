@@ -1,5 +1,6 @@
 #--------------------------PROCESSUS--------------------------
 #http://wawadeb.crdp.ac-caen.fr/iso/tmp/ressources/linux/www.ac-creteil.fr/reseaux/systemes/linux/processus.html
+#http://dept-info.labri.fr/~magoni/teleinfo/TP1-cours-sockets.pdf
 
 #Display processus
 ps -aef
@@ -81,7 +82,9 @@ A service can be multiple processes
     ssh, web server, database server, system logger
 
 #What is a socket ?
-Inter-process communication (IPC) mechanism that allows bidirectional data exchange between processes.
+A bidirectional point of communication through which a processus will emit/receive information.
+Sockets are not the only way of communication between processus.
+But it is very used.
 
 #What is a Unix socket ?
 Inter-process communication (IPC) running on the same host.
@@ -91,3 +94,60 @@ Use the filesystem
 
 #What is an IP socket ?
 IPC running over the network (often TCP/IP)
+
+#How to define a socket ?
+#C programming
+    #include<sys/types.h>
+    #include<sys/socket.h>
+    int socket(
+    int domaine, /* AF_UNIX ou AF_INET */
+    int type, /* SOCK_DGRAM ou SOCK_STREAM */
+    int protocole /* 0 : protocole par defaut */
+    );
+
+#What is domain ?
+Domain specifies the adress system used and low-levve protocol.
+AF_UNIX => local communication (files)
+AF_INET => IPv4 (Internet Protocol version4) (32 bits)
+AF_INET6 => IPv6 (Internet Protocol version6) (128 bits)
+
+
+#What is a socket descriptor ?
+Sockets can be used on UNIX and in a lot of system or machines.
+
+#What if OSI model ?
+OSI => Open Systems Interconnection
+Developed by => International Organization of Standardization
+Creation => 1984
+
+#Simplified version
+7 Application Layer (Telnet, FTP, Browser..)
+6 Presentation Layer
+5 Session Layer
+4 Transport Layer (TCP, UDP)
+3 Network Layer (IP)
+2 Data Link Layer (Ethernet)
+1 Physical Layer (Coaxial cables, fiber...)
+
+#What is OSI model goal ?
+Standardize with rules for comunications
+
+#https://openclassrooms.com/fr/courses/857447-apprenez-le-fonctionnement-des-reseaux-tcp-ip/851376-brancher-les-machines-la-couche-1
+
+#What is the layer for sockets ?
+Sockets are in Layer 4 (Transport)
+
+#What kind of sockets exist ?
+Socket Network
+    local adress (IP and port)
+    distant adress
+    network layer (IPv4, IPv6...)
+    transport layer(TCP, UDP...)
+Socket UNIX
+    Use filesystem as namespace
+Socket RAW
+
+#Why using UNIX socket ?
+Addressed as files
+Allowes us to use file permission for access control
+Unix sockets are created by socket sys call (while FIFO created by mkfifo)
