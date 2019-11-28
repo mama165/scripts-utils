@@ -2,3 +2,51 @@
 #https://blog.octo.com/le-filtre-de-bloom/
 #https://bioinfo-fr.net/filtre-de-bloom
 #https://www.fil.univ-lille1.fr/~varre/portail/asd/tp-html/tp_bloom.html
+
+#Video for explanation
+https://www.youtube.com/watch?v=Bay3X9PAX5k
+
+#What is a Bloom filter ?
+A bloom filter is a a probabilistic data structure containing elements.
+When you calculate via the 2 hash functions
+=> if NO then no element (100% sure)
+   if YES then the element is present (90% sure) (10% false positive)
+
+#What are the advantages ?
+Takes a lot less storage than other data structures (compared with hashtable)
+So we can save the data of the bloomfilter in memory
+And then run some computation a lot faster
+
+#Important !!
+For example with Hashtable :
+    When it takes a lot of storage the data will take a lot of storage
+
+#What are false positive ?
+When you calculate via the 2 hash functions
+You can have a YES (because of previous elements)
+
+#Improvements
+The more hash functions we take, the more accurate answer we get
+
+#What is the time complexity if we have K hash functions ?
+Its O(K)
+
+    h1() -> O(1) |
+    h2() -> O(1) |
+    ...          K times 
+
+#Good to know
+Hashtable time complexity is not always O(1)
+
+#What are some use cases ?
+Signup emails => john.wick@email.com available ?
+Browsers malicious url
+Databases for optimization
+Check if an article was already recommended to a user
+Bitcoins for synchronizing wallet
+
+#How does Google handle malicious url ?
+Let say we have a dataset representing a million of url (50 Mb)
+They calculate the bloom filter of the dataset, with all the hash functions.
+They obtain a huge number -> 9843450354685864964693876843963468
+Then they send it periodically to each browser
