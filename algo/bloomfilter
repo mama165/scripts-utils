@@ -41,6 +41,7 @@ Hashtable time complexity is not always O(1)
 #What are some use cases ?
 Signup emails => john.wick@email.com available ?
 Browsers malicious url
+Promo code (we have one code as input and a large dataset of string promo codes)
 Databases for optimization
 Check if an article was already recommended to a user
 Bitcoins for synchronizing wallet
