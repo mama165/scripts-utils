@@ -1,0 +1,12 @@
+#--------------------------HISTORY--------------------------
+
+#Display all last commands
+#Won't be committed until you disconnect
+history
+
+#Delete one line of history
+history -d <lineNumber>
+
+#Commit last history
+#Somebody else connected will see your history
+history -a

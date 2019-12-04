@@ -1,0 +1,36 @@
+#--------------------------COUNT MIN SKETCH--------------------------
+
+#https://towardsdatascience.com/big-data-with-sketchy-structures-part-1-the-count-min-sketch-b73fb3a33e2a
+
+#Video for explanation
+#https://www.youtube.com/watch?v=ibxXO-b14j4&t=1s
+
+#What is a count min sketch ?
+
+
+#What are the advantages ?
+We increment some counters, but our space allocated is constant.
+We can add million of events and out programm should run in the same amount of time/memory.
+O(1) algorithm
+
+#When should we use it ?
+Massive number of items
+Different types of items
+Items do not need to store
+
+#What are some use cases ?
+How many times did people watch Gangnam style ?
+“Hello” is more popular than “History of Japan” ?
+
+#Problem
+VideoOne is incrementing the 5,1,4,4 index
+VideoTwo is incrementing the 3,9,3,4 index
+
+We are checking the count of a never watched VideoThree
+The result of the hash function is 3,1,4,4 (mi value is 1...)
+
+The output of Hash functions for VideoThree was : 3,1,4,4
+
+getCount for VideoThree : min (2,1,1,3)
+
+But, VideoThree is never watched

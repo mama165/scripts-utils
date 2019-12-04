@@ -2,6 +2,26 @@
 
 #https://devopscube.com/consul-service-discovery-beginners-guide/
 
+#Why service discovery ?
+The cloud architecture i changing the way we build web applications that we are moving from large monoliths to microservices.
+If A needs to communicate with B, A have to know the IP adress & port.
+The easiest solution is by maintaining a configuration file that holds the IP adress and port to B at A.
+#Cons
+When the numbr of micro-services increases :
+- Configuration files are difficult to manage
+- It is error prone when some mismanagement happens
+- Lacks the flexibility to change the IP or port in a later point of time
+#Alternative solution
+Service discovery helps to solve the above problem by providing a way to  :
+- Register a service ie when a new service becomes online it registers itself to the service discovery service with its IP and port
+- Helps a service to find an other one (A will find B)
+- Helth check the health of insta,ce and to remove it when it is not well
+- Deregister when a service becomes offline
+
+Thus we obtain a dynamically scale cloud architecture.
+Thus the it is loosely coupled to each other
+
+
 #What is Consul ?
 Consul is a cluster management tool from Hashicorp.
 It is very useful for creating advanced micro-services architecture.
@@ -16,8 +36,6 @@ Health check
 
 #How does it work ?
 Consul is an agent-based tool running within the nodes where services are running.
-
-Consul is a
 
 #What about UI ?
 A client agent can user for UI and query the information about the cluster of servers.

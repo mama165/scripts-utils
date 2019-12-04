@@ -1,0 +1,4 @@
+#--------------------------ANSIBLE--------------------------
+
+#How to start ?
+Create a user ansible with home /opt/ansible

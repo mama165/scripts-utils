@@ -2,6 +2,16 @@
 #http://wawadeb.crdp.ac-caen.fr/iso/tmp/ressources/linux/www.ac-creteil.fr/reseaux/systemes/linux/processus.html
 #http://dept-info.labri.fr/~magoni/teleinfo/TP1-cours-sockets.pdf
 
+#Display all processus from john.wick
+top -u john.wick
+#Output
+PID    USER     PR   NI  VIRT    RES    SHR  S   %CPU %MEM   TIME+ COMMAND
+20737 mael.na+  20   0  162156   2508   1608 R   0,7  0,1   0:10.98 top
+20375 mael.na+  20   0  154996   2724   1244 S   0,0  0,1   0:00.25 sshd
+20376 mael.na+  20   0  118872   5480   1812 S   0,0  0,1   0:00.18 bash
+20391 mael.na+  20   0  154696   2400   1060 S   0,0  0,1   0:00.00 sshd
+20392 mael.na+  20   0  154696   2072    724 S   0,0  0,1   0:00.00 sshd
+
 #Display processus
 ps -aef
 

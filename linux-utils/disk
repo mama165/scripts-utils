@@ -23,7 +23,7 @@ fdisk -l
 pvcreate /dev/sdb
 
 #Check if physical volume has been created
-pv display
+pvdisplay
 #OR
 pvs
 
