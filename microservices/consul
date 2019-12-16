@@ -21,7 +21,6 @@ Service discovery helps to solve the above problem by providing a way to  :
 Thus we obtain a dynamically scale cloud architecture.
 Thus the it is loosely coupled to each other
 
-
 #What is Consul ?
 Consul is a cluster management tool from Hashicorp.
 It is very useful for creating advanced micro-services architecture.
