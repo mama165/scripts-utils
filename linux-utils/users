@@ -246,3 +246,13 @@ grep "^UID_MAX" /etc/login.defs
 
 #Check integrity of passw or shadow
 pwck -r
+
+#Verify no accounts have empty password
+awk -F: '($2 == "") {print}' /etc/shadow
+
+#Make sure no non-root accounts have UID set to 0
+awk -F: '($3 == "0") {print}' /etc/passwd
+#Output(expected)
+root:x:0:0:root:/root:/bin/bash
+#Ouput(unexpected)
+john.wick:x:0:0:nice,strong,trustworthy,human:/home/john.wick:/bin/bash

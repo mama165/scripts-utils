@@ -1,0 +1,97 @@
+#--------------------------PACKAGE--------------------------
+
+#What's a package ?
+Archive containing files, information for the OS
+Different types of systems => RPM
+
+#--------------------------DEBIAN--------------------------
+#What is last version ?
+Debian 10 (Buster)
+
+
+#--------------------------REDHAT--------------------------
+
+#What are distros from RedHat ?
+CentOS 8 (last version of CentOS)
+
+#Why using a tool for managing software ?
+In the past, many Linux programs were distributed as source code.
+A user would build into the required program or set of programs.
+Along with the required man pages, configuration files, and so on.
+Nowadays, most Linux distributors use prebuilt programs or sets of programs called packages, which ship ready for installation on that distribution. 
+
+#What is main tool ?
+YUM = Yellowdog Updater Modified
+Primary tool for getting, installing, deleting, querying and managing Red Hat Enterprise Linux RPM.
+
+#What are packages ?
+RPM = Red Hat Package Manager 
+
+#Where are packages installed ?
+
+
+#Where are repositories located ?
+/etc/yum.repos.d
+#Example
+    CentOS-Base.repo
+    epel.repo
+    rsyslog_repo.repo
+
+#Display commands ad options
+yum help
+
+#List all available packages
+yum list available
+
+#List all installed packages
+yum list installed
+
+#List installed and available packages
+yum list all
+
+#Display information about a package
+yum info docker
+
+#Display dependencies for a package
+yum deplist docker
+
+#Install a package
+#Will resolve all dependencies
+yum install gcc‑gfortran
+
+#Remove a package
+yum remove gcc‑gfortran
+
+#Update a package
+yum update gcc‑gfortran
+
+# Update distrib
+# Never upgrade on major version
+# If I'm on CentOS 4 (an old version, I won't be on CentOS 5)
+yum update
+
+#Install a package (manually)
+rpm ‑i  gcc‑gfortran
+
+#Test removal of a package (manuallly)
+rpm ‑e ‑‑test gcc‑gfortran
+
+#Remove a package (manuallly)
+rpm ‑e gcc‑gfortran
+
+#List files in a package
+rmt -ql htop
+#Output
+    /usr/bin/htop
+    /usr/share/doc/htop-2.0.2
+    /usr/share/doc/htop-2.0.2/AUTHORS
+    /usr/share/doc/htop-2.0.2/COPYING
+    /usr/share/doc/htop-2.0.2/ChangeLog
+    /usr/share/doc/htop-2.0.2/README
+    /usr/share/man/man1/htop.1.gz
+    /usr/share/pixmaps/htop.png
+
+#Find wich depends on a package
+repoquery -q --installed --whatrequires libmspack
+#Output
+open-vm-tools-0:10.2.5-3.el7.x86_64
