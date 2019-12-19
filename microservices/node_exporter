@@ -1,0 +1,7 @@
+#--------------------------NODE EXPORTER--------------------------
+
+#What is Node exporter ?
+Node exporter is the best way to collect all the Linux server related metrics and statistics for monitoring.
+
+https://devopscube.com/monitor-linux-servers-prometheus-node-exporter/
+https://blog.debugo.fr/tuto-monitoring-prometheus-partie-2-node-exporter/

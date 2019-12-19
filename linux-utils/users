@@ -229,7 +229,7 @@ cut -d: -f1 /etc/passwd
 #Display the minimum UID for users (non system)
 #Only those users can login into system
 #Only if shell is bash/csh/tcsh/ksh... as defined in /etc/shells
-#Example : UID_MIN = 1000 => users with UID => 1000 can login
+#Example : UID_MIN = 1000 => users with UID >= 1000 can login
 grep "^UID_MIN" /etc/login.defs
 
 #Display the maximum UID for users (non system)
