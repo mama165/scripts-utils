@@ -21,10 +21,10 @@ cat -A foo.txt
 #
 ls path/to/directory
 
-#Display list of hidden files/directories
+#List of hidden files/directories
 ls -a path/to/directory
 
-#Display a detailed list of files/directories
+#List of detailed files/directories
 ls -l path/to/directory
 #OR
 ll path/to/directory
@@ -32,9 +32,27 @@ ll path/to/directory
 #
 ls -n path/to/directory
 
-#Display list of files/directories
+#List of files/directories
 #"/" at the end of output distinguishes files from directories
 ls -p path/to/directory
 
-#Display recursively
+#List recursively
 ls -R path/to/directory
+
+#Display rights about a directory
+ls -ld path/to/directory
+#Example
+ls -ld /home/john.wick
+#Output
+drwx------. 6 john.wick john.wick 261 19 déc.  10:02 /home/john.wick/
+#Or
+getfacl /tmp
+#Output
+    getfacl: Removing leading '/' from absolute path names
+    # file: tmp
+    # owner: root
+    # group: root
+    # flags: --t
+    user::rwx
+    group::rwx
+    other::rwx

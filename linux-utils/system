@@ -93,3 +93,29 @@ systemctl list-unit-files
 #View all the logs in your journal
 #Created by systemd
 journalctl
+
+#How are service created ?
+Files contained in pakages downloaded from distribution repository
+      /usr/lib/systemd/system/
+      (units of installed packages)
+      (anything installed via RPM)
+Modifications done by the system administrator (user)
+      /etc/systemd/system (local configuration)
+#Example
+Docker service information located in : /usr/lib/systemd/system/docker.service
+
+#Create a service ninja
+cd /etc/systemd/system
+vim ninja.service
+
+[Unit] #global information about the service
+Description=Mon service de test
+After=tlp-init.service
+
+[Service] #information about service itself
+Type=oneshot
+RemainAfterExit=no
+ExecStart=/usr/bin/ninja.sh
+
+[Install] #handle triggering
+WantedBy=multi-user.target

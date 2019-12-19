@@ -28,3 +28,6 @@ w -h |  wc -l
 
 #Count all user accounts
 wc -l /etc/passwd
+
+#Count all files and directories
+ls | wc -l
