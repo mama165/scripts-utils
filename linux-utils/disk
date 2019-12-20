@@ -1,92 +1,71 @@
 #--------------------------DISKS & VOLUMES--------------------------
 
-#PHYSICAL VOLUME (PV)
-#Represents your physical disks
-
-#VOLUME GROUP (VG)
-#Represents your physical disks
-#Can be composed of several physical disks
-
-#LOGICAL VOLUME (LV)
-#Represents a place where FS are stored
-
-#VG or LV can be resized
-#PV can't be resized
+#What's the initial state ?
+We have 50 Go available.
+We decide to install the filestem on 20 Go.
+Now we want to add a disk of 30Go unmounted on the system.
 
 #List all physical volumes
 fdisk -l
 #Output : Disque /dev/sda 
-#         Disque /dev/sdb 
-
+#         Disque /dev/sdb
 
 #Create a physical volume
+#* for the disk to add
+pvcreate /dev/sd*
+#Example
 pvcreate /dev/sdb
+#Output
+Physical volume "/dev/sdb" successfully created
 
 #Check if physical volume has been created
 pvdisplay
-#OR
+#Or
 pvs
 
-#Create a VG
-vgcreate VG0 /dev/sdb
+#Create a volume group
+vgcreate centos_data /dev/sdb
+#Output
+Volume group "centos_data" successfully created
 
 #Check if volume group has been created
 vgdisplay
-#OR
+#Or
 vgs
 
-#Create a logical volume of 5Go in the previous volume group
-lvcreate -n <LVname> -L <size> <nom du VG>
-lvcreate -n LVTest -L 5go VG00
+#Create a logical volume of 10 Go
+#We'll be added in volume group
+#"data" will give us => \data
+lvcreate -L 10G -n data centos_data
+#Or
+#Use all available space from volume group
+lvcreate -l +100%free -n data centos_data
+#Output
+Logical volume "data" created
 
-#Create a partition ext4
-mkfs -t <fileSystemType> <patLVPathh>
-mkfs -t ext4 /dev/mapper/VG00-LVTest
+#Check if logical volume has been created
+lvdisplay
+#Or
+lvs
 
-#Create mount point folder
-mkdir <folder>
-mkdir /Test
+#Format logical volume
+mkfs -t ext4 /dev/mapper/centos_data-data
 
-#Mount the volume
-mount /dev/mapper/VG00-LVTest /Test
+#Create directory for the new logical volume
+mkdir /data
 
-#Check if partition has been created
+#Mount the logical volume
+mount /dev/mapper/centos_data-data /data
+
+#Add entry in fstab file
+#The system will mount the logical volme with format
+vi /etc/fstab
+#Write at the end :
+/dev/mapper/centos_data-data /data	ext4	defaults	0 0
+
+#Check configuration
+mount -a
+
+#Check disk size
+#disk free
 df -h
-
-#--------------------------OPERATIONS--------------------------
-
-
-#Increase volume group & logical volume (VG & LV)
-    #We have a ne disk and we want to increase the VG
-    #1)Create a new PV
-        pvcreate <disk>
-    #2)Increase our VG
-        vgextend <VGName> <disk>
-        vgextend VG00 /dev/sdc
-    #3)Check our LV
-        e2fsck -f <LVPath>
-        e2fsck -f /dev/mapper/VG00-LVTest
-    #4)Resize LV
-        lvresize -L <newSize> <LVPath>
-        lvresize -L 2go /dev/mapper/VG00-LVTest
-    #5)Resize the partition
-        resize2fs <LVPath>
-        resize2fs /dev/mapper/VG00-LVTest
-
-#Decrease logical volume (very careful !)
-    #If LV decreased before partition it can be dangerous
-    #1)Unmount the partition
-        unmount <partition>
-    #2)Check partition
-        e2fsck <partitionPath>
-        e2fsck /dev/mapper/VG00-LVTest
-    #2)Resize partition
-        resize2fs <partitionPath> <newSize>
-        resize2fs /dev/mapper/VG00-LVTest 2500m
-    #3)Reduce LV
-        lvreduce -L <newSize> <LVPath>
-        lvreduce -L 2500m /dev/mapper/VG00-LVTest
-    #4)Mount our volume
-        mount /dev/mapper/VG00-LVTest /Test
-    #5)Check size different
-        df -h
