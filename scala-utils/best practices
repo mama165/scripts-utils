@@ -1,2 +1,46 @@
 #--------------------------BEST PRACTICES--------------------------
 
+#Scala
+#File tree
+- .idea (IntelliJ files)
+- project (plugins and additional settings for sbt)
+- src (source files)
+    - main (application code)
+        - java (Java source files)
+        - scala (Scala source files) <-- This is all we need for now
+        - scala-2.12 (Scala 2.12 specific files)
+    - test (unit tests)
+- target (generated files)
+- build.sbt (build definition file for sbt)
+
+
+#Run tests
+sbt test
+
+#Keywords
+#Loan pattern
+https://www.outbrain.com/techblog/2017/05/effective-testing-with-loan-pattern-in-scala/
+
+#Monades
+M[A]
+List[A]
+Option[A]
+Future[A]
+Either[A]
+
+#MAP
+#map take a function (that take A and returns B) as parameter and return
+def map[B](f: A => B): M[B]
+
+
+#Either
+#We can map inside an Either to change the right values => either.map(...)
+#We can map inside an Either to change the left values => either.left.map(...)
+
+#How to handle date
+Instant.now
+Instant.now().toEpochMilli
+OffsetDateTime.now()
+ZonedDateTime.now()
+java.util.Date.from(Instant.now())
+LocalDate.now()

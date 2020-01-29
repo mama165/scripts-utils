@@ -1,0 +1,11 @@
+#--------------------------SHORTCUTS--------------------------
+
+#MacOS
+MaJ + Option + L => |
+
+#Intellij
+Ctrl + Option + O => Optimize import
+Maj + Option + 5 => Crochet
+Ctrl + Maj + p => signature
+Maj + Option + / => \
+CTRL + J => ScalaDoc (over a method)

@@ -1,0 +1,61 @@
+#--------------------------SCRATCHES--------------------------
+
+
+#Examples
+import scala.util.Try
+
+val amountAsString = "1234"
+
+def getAmount(str: String): Either[Throwable, Long] =
+  Try(amountAsString.toLong).toEither
+
+for {
+  amount <- getAmount(amountAsString)
+  _ <- Either.cond(amount > 0, (), new Error("le montant est négatif"))
+  _ <- Either.cond(amount < 100000000L, (), new RuntimeException("ce montant est trop élevé"))
+} yield amount
+
+
+val result: Either[String, String] = for {
+  amount <- getAmount(amountAsString).left.map(_.getMessage)
+  _ <- Either.cond(amount > 0, (), new Error("le montant est négatif")).left.map(_.getMessage)
+  _ <- Either.cond(amount < 100000000L, (), new RuntimeException("ce montant est trop élevé")).left.map(_.getMessage)
+} yield "String"
+
+
+#Testing cats
+#Reimplementing foldLeft
+
+import scala.io.Source
+import cats.syntax.traverse._
+import cats.implicits._
+import cats.syntax.bifunctor._
+
+//Source.fromResource("decisionTree/tree_1.txt").mkString("\n").split("\n").toList.prin
+//println(Source.fromResource("decisionTree/tree_1.txt").getLines().toList)
+
+
+val list1: List[Either[String, Int]] = List(Right(1),Right(2),Right(3),Right(4),Right(5))
+val list2: List[Either[String, Int]] = List(Right(1),Left("NaN1"),Right(3),Left("NaN"),Right(5))
+
+//list1.sequence
+//list2.sequence
+
+list1.foldLeft()
+
+#Reverse List[Either] to Either[List]
+#Input : val inputList: List[Either[String, Int]] = List(Right(1),Right(2),Right(3),Right(4),Right(5))
+#Expected : output: Either[String,List[Int]] = Right(List(1, 2, 3, 4, 5))
+
+val inputList: List[Either[String, Int]] = List(Right(1),Right(2),Right(3),Right(4),Right(5))
+
+inputList.foldLeft[Either[String, List[Int]]](Right(List())) {
+  (accEither, element) =>
+    accEither match {
+      case Left(value) => Left(value)
+      case Right(list) => element match {
+        case Left(value) => Left(value)
+        case Right(value) => Right(list :+ value)
+      }
+    }
+}

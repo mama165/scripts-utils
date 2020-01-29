@@ -97,3 +97,43 @@ git log master
 
 #Display commit history (from remote)
 git log origin/master
+
+#Fixup a commit with message
+#https://blog.sebastian-daschner.com/entries/git-commit-fixup-autosquash
+#Example
+3320dec (HEAD) commit 4
+03c9685 commit 3
+041c401 commit 2
+981fffd commit 1
+22f759b (tag: base) initial commit
+#Fix commit
+git commit -a --fixup 981fffd
+#Output
+c24491b (HEAD) fixup! commit 1
+3320dec commit 4
+03c9685 commit 3
+041c401 commit 2
+981fffd commit 1
+22f759b (tag: base) initial commit
+#Interactively rebase
+git rebase --autosquash --interactive base
+#Output
+#Commit hashes after 22f759b now have been changed
+#Based on different commits
+caeb1d8 (HEAD) commit 4
+2f6d4da commit 3
+8207cf2 commit 2
+551ef47 commit 1
+22f759b (tag: base) initial commit
+
+#Push keeping initial history
+#When you only push force, you'll erase all record of Alice's changes
+git push origin CT-6846 --force-with-lease
+
+git commit --amend-no-edit
+
+#Delete last commit
+git reset --soft HEAD~1
+
+#Delete 2 last commit
+git reset --soft HEAD~2
