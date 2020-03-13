@@ -1,0 +1,5 @@
+#--------------------------KAFKA--------------------------
+
+Mutilple partitions in one topic
+Write at the end of each partitions (default)
+Or write in a specific partition

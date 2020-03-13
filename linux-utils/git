@@ -88,7 +88,7 @@ git revert HEAD
     #We can rewrite each commit before
     #adding the feature on master branch
     #Be careful when pushing all changes
-    git push --force
+    git push --force-with-lease
 
 #Display commit history (from local)
 git log
@@ -98,6 +98,7 @@ git log master
 #Display commit history (from remote)
 git log origin/master
 
+#Commit changes into an old commit
 #Fixup a commit with message
 #https://blog.sebastian-daschner.com/entries/git-commit-fixup-autosquash
 #Example
@@ -116,7 +117,7 @@ c24491b (HEAD) fixup! commit 1
 981fffd commit 1
 22f759b (tag: base) initial commit
 #Interactively rebase
-git rebase --autosquash --interactive base
+git rebase -i --autosquash HEAD~5
 #Output
 #Commit hashes after 22f759b now have been changed
 #Based on different commits
@@ -130,10 +131,27 @@ caeb1d8 (HEAD) commit 4
 #When you only push force, you'll erase all record of Alice's changes
 git push origin CT-6846 --force-with-lease
 
+#Add and commit with message
+git commit -am "wip: new commit message"
+
+#Add modifications to last commit
+#Message unchanged
 git commit --amend-no-edit
 
-#Delete last commit
+#Change message from last commit
+git commit --amend -o -m "New commit message"
+
+#Change message from previous commit
+#Find the 9th commit
+#Change pick to r (reword) and save/close
+git rebase -i @~9   # Show the last 9 commits in a text editor
+
+#Delete last commit (local)
 git reset --soft HEAD~1
 
-#Delete 2 last commit
+#Delete 2 last commit (local)
 git reset --soft HEAD~2
+
+#Good practice
+Go on Gitlbab and rebase but wait the "semaphore"
+to merge

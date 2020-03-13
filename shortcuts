@@ -2,10 +2,14 @@
 
 #MacOS
 MaJ + Option + L => |
+CTRL + SHIFT + 5 => Impr. ecran
+ALT + N => ~
 
 #Intellij
 Ctrl + Option + O => Optimize import
+Option + CMD + L => scalafmt
 Maj + Option + 5 => Crochet
 Ctrl + Maj + p => signature
+CMD + P => arguments from methods
 Maj + Option + / => \
 CTRL + J => ScalaDoc (over a method)

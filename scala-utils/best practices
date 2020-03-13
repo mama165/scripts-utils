@@ -37,10 +37,18 @@ def map[B](f: A => B): M[B]
 #We can map inside an Either to change the right values => either.map(...)
 #We can map inside an Either to change the left values => either.left.map(...)
 
-#How to handle date
+#How to handle dates ?
+#Avoid LocalDate because it's not precise enough
 Instant.now
 Instant.now().toEpochMilli
 OffsetDateTime.now()
 ZonedDateTime.now()
 java.util.Date.from(Instant.now())
 LocalDate.now()
+
+res0: java.time.Instant = 2020-01-28T16:56:27.809Z
+res1: Long = 1580230587881
+res2: java.time.OffsetDateTime = 2020-01-28T17:56:27.953+01:00
+res3: java.time.ZonedDateTime = 2020-01-28T17:56:28.048+01:00[Europe/Paris]
+res4: java.util.Date = Tue Jan 28 17:56:28 CET 2020
+res5: java.time.LocalDate = 2020-01-28
