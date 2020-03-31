@@ -1,5 +1,7 @@
 #--------------------------GIT --------------------------
 
+#https://github.blog/2015-06-08-how-to-undo-almost-anything-with-git/
+
 #Initialize a repository called "docker-utils"
 git init
 git add foo.txt
@@ -37,9 +39,23 @@ git branch -r
 #Display all branches (remote & local)
 git branch -a
 
+#Count remote branches
+git branch --remotes | wc -l
+
+#Rename local an remote branch
+#If you are on the branch
+git branch -m new-name
+#If you're not
+git branch -m old-name new-name
+#Delete the old-name remote branch
+#Push the new-name local branch.
+git push origin :old-name new-name
+
 #Delete branch on local (with warning)
 #You have to be on another branch for that
 git branch -d <branch_name>
+#Reset the upstream branch for the new-name local branch
+git push origin -u new-name
 
 #Delete branch on local (without warning)
 #You have to be on another branch for that
@@ -80,7 +96,7 @@ git revert HEAD
     #Continue the rebase
     git rebase --continue
     #Be careful when pushing all changes
-    git push -- force
+    git push --force
 
     #REBASE INTERACTIVE
     git checkout feature
@@ -146,12 +162,39 @@ git commit --amend -o -m "New commit message"
 #Change pick to r (reword) and save/close
 git rebase -i @~9   # Show the last 9 commits in a text editor
 
+#Delete changes (unstaged)
+git reset --hard
+
+#Delete changes
+#Synchronyse with remote feature branch
+git reset --hard origin/feature
+
 #Delete last commit (local)
 git reset --soft HEAD~1
 
 #Delete 2 last commit (local)
 git reset --soft HEAD~2
 
+#Delete last commit (pushed)
+git reset --hard "aba7180fbb57528321644009c45218125ce79103"
+git clean -f -d
+git push origin feature --force-with-lease
+
+#Get changes from origin/master to feature (local)
+git fetch
+git rebase origin/master
+
+#Code review
+#We need the remote feature branch of a developer
+git fetch
+git checkout review
+
 #Good practice
 Go on Gitlbab and rebase but wait the "semaphore"
 to merge
+
+#Alias zsh
+gst
+glog
+gl
+gstp (git stash pop)
