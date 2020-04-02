@@ -301,6 +301,7 @@ http://localhost:5000/v2/_catalog
 
 #Container processes vs hosts processes
     https://stackoverflow.com/questions/39931316/what-is-the-pid-in-the-host-of-a-process-running-inside-a-docker-container
+    https://www.youtube.com/watch?v=W6p_aiYplbM
 #Example
     #We have 3 blocked processes (apache for example)
     #Find a processus sleeping from container to host
@@ -334,6 +335,17 @@ http://localhost:5000/v2/_catalog
     #Kill the processus inside the container
     kill 7
     #The processus will disappear from the container
+
+#Example
+#Start a container with a process sleep
+docker run -d --name usertest ubuntu:latest sleep infinity
+ps aux | grep sleep
+#Output
+root      322297  0.1  0.0   4532   796 ?        Ss   08:52   0:00 sleep infinity
+#sart it again
+docker run -d --name usertest ubuntu:latest sleep infinity
+#Output
+dockrem+  324136  0.0  0.0   4532   840 ?        Ss   09:29   0:00 sleep infinity
 
 #Display processus from container
 (ps -ef | grep $(docker inspect --format '{{.State.Pid}}' php-sandbox) | awk '{print $2}') ; do grep NSpid: /proc/$i/status ; done

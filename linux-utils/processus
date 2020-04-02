@@ -161,3 +161,14 @@ Socket RAW
 Addressed as files
 Allowes us to use file permission for access control
 Unix sockets are created by socket sys call (while FIFO created by mkfifo)
+
+
+#Find all process listening on tcp on port 80
+lsof -i tcp:80
+
+#Find all process listening on tcp
+#Without changing port by service
+#443 == https
+lsof -P -i tcp
+
+lsof -i tcp john.wick
