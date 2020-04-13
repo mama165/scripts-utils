@@ -1,4 +1,5 @@
 #--------------------------BEST PRACTICES--------------------------
+#https://www.youtube.com/watch?v=QfmVc9c_8Po
 
 #Scala
 #File tree
@@ -52,3 +53,20 @@ res2: java.time.OffsetDateTime = 2020-01-28T17:56:27.953+01:00
 res3: java.time.ZonedDateTime = 2020-01-28T17:56:28.048+01:00[Europe/Paris]
 res4: java.util.Date = Tue Jan 28 17:56:28 CET 2020
 res5: java.time.LocalDate = 2020-01-28
+
+
+#Value class for wrapping primitive types (Int, Boolean, Long...)
+#https://stackoverflow.com/questions/42234299/are-there-advantages-for-using-value-class-without-methods-vs-type-alias
+#This will fail at compile time because "some random string" is not a PersonId
+case class PersonId(id: String) extends AnyVal
+case class Person(id: PersonId)
+
+Person("some random string")
+
+#Dry overuse
+
+case class User(id: Option[String], name: String, email: Option[String] = None, friends: Seq[String]) = Seq(), admin: Boolean = false)
+#VS
+case class UserCreation(name: String, email: String)
+case class User(id: String, name: String, email: String)
+case class UserFull(id: String, name: String, email: String, friends: Seq[String], admin: Boolean)

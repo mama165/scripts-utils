@@ -35,7 +35,7 @@ userdel --remove john.wick
 
 #Delete a user john.wick (force)
 #BE CAREFUL !!!
-#Even if user is stille logged in
+#Even if user is still logged in
 #If a group exists with the same name
 #It will be removed
 #even if it's still a primary group of another user
