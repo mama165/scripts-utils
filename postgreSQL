@@ -1,0 +1,7 @@
+#--------------------------POSTGRESQL---------------------------
+
+#Connection to postgreSQL (local)
+psql
+
+#Connection to postgreSQL (remote)
+psql -h remote.adress -p 5432 -U john.wick -d database

@@ -1,4 +1,4 @@
-#--------------------------FILES--------------------------
+#--------------------------FILES & DIRECTORIES--------------------------
 
 #Compare two files
 diff expected.txt output.txt
@@ -56,3 +56,6 @@ getfacl /tmp
     user::rwx
     group::rwx
     other::rwx
+
+#Find all directories named "target" and delete them
+find . -name "target" -exec rm -r {} \;

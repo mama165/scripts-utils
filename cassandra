@@ -1,2 +1,9 @@
 #--------------------------CASSANDRA---------------------------
 https://code.tutsplus.com/fr/articles/getting-started-with-cassandra-using-cql-api-and-cqlsh--cms-28026
+
+#Connection to Cassandra (local)
+cqlsh
+
+#Connection to Cassandra (remote)
+#keyspace: ninja, user: john.wick, host: remote.adress password: tryhard
+cqlsh -k ninja -u john.wick remote.adress -p tryhard

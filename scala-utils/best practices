@@ -54,6 +54,13 @@ res3: java.time.ZonedDateTime = 2020-01-28T17:56:28.048+01:00[Europe/Paris]
 res4: java.util.Date = Tue Jan 28 17:56:28 CET 2020
 res5: java.time.LocalDate = 2020-01-28
 
+#Handling dates
+#https://blog.invivoo.com/jdk8-une-nouvelle-date-incontournable/
+java.time.LocalDate permet de gérer des dates uniquement (pas les heures) et sans gestion de fuseau horaire.
+java.time.LocalTime permet de gérer des heures uniquement (sans date) et sans gestion de fuseau horaire.
+java.time.LocalDateTime permet de gérer des dates avec heures et sans gestion de fuseau horaire.
+java.time.Clock permet de gérer des dates avec heures et avec gestion de fuseau horaire.
+
 
 #Value class for wrapping primitive types (Int, Boolean, Long...)
 #https://stackoverflow.com/questions/42234299/are-there-advantages-for-using-value-class-without-methods-vs-type-alias

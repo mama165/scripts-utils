@@ -143,6 +143,16 @@ caeb1d8 (HEAD) commit 4
 551ef47 commit 1
 22f759b (tag: base) initial commit
 
+#Split one commit into two commits
+git rebase -i HEAD~1
+#Mark the commit with "edit"
+git reset HEAD^
+git add sample.txt
+git commit -m "first message"
+git add sample.other.txt
+git commit -m "second message"
+git rebase --continue
+
 #Push keeping initial history
 #When you only push force, you'll erase all record of Alice's changes
 git push origin CT-6846 --force-with-lease
@@ -170,15 +180,21 @@ git reset --hard
 git reset --hard origin/feature
 
 #Delete last commit (local)
+#Your copy are back but unstaged !
 git reset --soft HEAD~1
 
 #Delete 2 last commit (local)
+#Your copy are back but unstaged !
 git reset --soft HEAD~2
 
 #Delete last commit (pushed)
 git reset --hard "aba7180fbb57528321644009c45218125ce79103"
 git clean -f -d
 git push origin feature --force-with-lease
+
+#Get changes from a commit in another remote branch feature1 to feature2
+#Only need the hash from feature1
+git cherry-pick e87305647c7d1e3ebf0d3fa1e1fa73e9eef0f090
 
 #Get changes from origin/master to feature (local)
 git fetch

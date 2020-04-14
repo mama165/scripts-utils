@@ -203,6 +203,9 @@ docker attach <nginx_container_name>
 #Stop container gracefully (SIGTERM)
 docker stop
 
+#Stop all containers gracefully (SIGTERM)
+docker stop $(docker ps -aq)
+
 #https://medium.com/@gchudnov/trapping-signals-in-docker-containers-7a57fdda7d86
 #https://www.memogeeks.com/2018/11/kill-stop-and-pause-docker-commands.html#summary
 #https://superuser.com/questions/756999/whats-the-difference-between-docker-stop-and-docker-kill/1204541#1204541
