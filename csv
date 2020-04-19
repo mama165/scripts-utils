@@ -1,0 +1,7 @@
+#--------------------------CSV--------------------------
+
+#Manipulate CSV as SQL
+brew install csvq
+
+
+csvq "select id, name from `sample.csv`"

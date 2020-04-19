@@ -94,9 +94,15 @@ docker rmi -f fd484f19954f
     Repositories hosting
     Stores a collection of repositories
 
+#Delete all images
+docker rmi $(docker images -a -q)
+
+#Delete all images (force)
+docker rmi -f $(docker images -a -q)
+
 #Buid an image from a Dockerfile
 #The Dockerfile is in the current directory
-#"." means that the current directory will be uses as "./" 
+#"." means that the current directory will be used as "./" 
 #inside the Dockerfile instructions...
 docker build .
 
@@ -138,6 +144,9 @@ docker rm -f <CONTAINERID>
 #Get all container IDs (started or stopped) = > docker ps -a -q
 docker rm $(docker ps -a -q)
 
+#Delete all containers (force)
+docker rm -f $(docker ps -a -q)
+
 #Information about containers
 docker info
 
@@ -178,7 +187,7 @@ docker logs -f
     #1.If you don't have the image locally, docker pulls it from the registry
     #2.Docker creates a new container
     #3.Docker allocates  a read-write filesystem to the container
-    #4.Docker creates a networf interface to connect the container to the defaukt network
+    #4.Docker creates a network interface to connect the container to the defaukt network
     #5.Docker starts the container and executes /bin/bash (interactive mode)
     #https://medium.com/devopsion/life-and-death-of-a-container-146dfc62f808
 docker run -it -d -p 9000:80 --name=debian_container1 debian /bin/bash
@@ -391,5 +400,15 @@ systemctl disable docker
 #Viewing logs about the docker service
 journalctl -u docker
 
+
+#How to install vim inside from a container ?
+
+apt-get update && \
+apt-get install apt-file && \
+apt-file update && \
+apt-get install vim     # now finally this will work !!!
+
 #--------------------------PRACTICE--------------------------
 https://docker.cdn.prismic.io/docker%2Fa2d454ff-b2eb-4e9f-af0e-533759119eee_dca+study+guide+v1.0.1.pdf
+
+https://softchris.github.io/pages/docker-concepts.html#the-basics

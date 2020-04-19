@@ -172,3 +172,23 @@ lsof -i tcp:80
 lsof -P -i tcp
 
 lsof -i tcp john.wick
+
+#Find PID of all java processes
+pgrep java
+
+#Find PID of root sshd processes
+pgrep -u root sshd
+
+#Kill java process
+pkill -9 java
+
+#Kill processes based on full command line
+#Input
+ps
+#Output
+...
+root 19253 0.0 0.1 9180 2916 pts/1 S+ 19:24 0:00 ping google.com
+root 19331 0.0 0.1 9180 2912 pts/2 S+ 19:25 0:00 ping howtoforge.com
+...
+#pkill ping would kill both the commands
+pkill -f "ping google.com"

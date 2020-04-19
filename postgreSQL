@@ -5,3 +5,36 @@ psql
 
 #Connection to postgreSQL (remote)
 psql -h remote.adress -p 5432 -U john.wick -d database
+
+#Execute
+psql -U john.wick -f init.sql
+
+#List all databases
+\l
+
+#List all tables
+\dl
+
+#Switch to database foo
+\c foo
+
+#Quit PostgreSQL
+\q
+
+#List all schemas
+\dn
+
+#List all tables in a schema sample
+\dt sample.*
+#OR
+select * from pg_tables where schemaname='sample';
+
+#Clear terminal
+#Execute a shell command => \!
+\! clear
+
+#Display all elements from table EVENTS in schema sample
+select * from sample.EVENTS;
+
+#Delete a function (used in trigger)
+drop function delete_row cascade;

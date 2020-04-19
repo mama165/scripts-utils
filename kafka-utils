@@ -2,4 +2,38 @@
 
 Mutilple partitions in one topic
 Write at the end of each partitions (default)
+Round robin by default
 Or write in a specific partition
+
+#How Kafka works ?
+No partition key : 
+    By default, when producing data, round robin fashion is used (paralellism).
+With partition key :
+    hash(key) % numPartitions
+
+
+#How to debug ?
+We write message and the kafka conf specifies that it is commited for each groupID.
+So when consuming one groupID, if the conf says commit=false,
+we can consume it indefinitly without deleting messages
+
+#List all topics (local)
+kafka-topics --list --bootstrap-server localhost:9092
+
+#Create a topic
+kafka-topics --create --if-not-exists --bootstrap-server localhost:9092 --topic orders
+
+#List all topics (remote)
+#With configuration file
+#host: remote.adress, port 9093
+kafka-topics --list --bootstrap-server remote.adress:9093 --command-config directory/config.conf
+
+#Delete a topic
+kafka-topics --delete --bootstrap-server localhost:9092 --topic local_topic
+
+#Display all messsages
+kafka-console-consumer --bootstrap-server localhost:9092 --topic local_topic
+
+#Display all messsages (only one specific attribute)
+#jq is a tool to manipulate some json datas
+kafka-console-consumer --bootstrap-server localhost:9092 --topic local_topic --from-beginning | jq .uuid

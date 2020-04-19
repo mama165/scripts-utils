@@ -1,0 +1,9 @@
+#--------------------------CASSANDRA---------------------------
+
+#What is the heap memory ?
+The heap memory is used to store Java Object.
+
+#-Xms<size> - to set the minimal/starting Java heap size
+#-Xmx<size> - to set the maximum Java heap size
+#-XX:MaxPermSize - to set the maximum size of the permanent generation
+set JVM_ARGS="-Xms200m -Xmx512m -Dpropname=propvalue..."

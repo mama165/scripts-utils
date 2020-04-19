@@ -59,3 +59,12 @@ getfacl /tmp
 
 #Find all directories named "target" and delete them
 find . -name "target" -exec rm -r {} \;
+
+#Print duplicates (console)
+uniq -d sample.csv
+
+#Print duplicates (file)
+uniq sample.csv >> duplicates.csv
+
+#Find string occurences in all files (current directory)
+grep -r "la merguez partie" .

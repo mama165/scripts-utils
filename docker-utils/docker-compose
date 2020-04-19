@@ -11,3 +11,8 @@ docker-compose up -d
 
 #Check if config file is correct (from docker-compose.yml)
 docker-compose config
+
+#How to share environment variables ?
+#Example
+env_file:
+      - ./docker/shared/shared_variables.env
