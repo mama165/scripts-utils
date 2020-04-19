@@ -18,6 +18,9 @@
 #Run tests
 sbt test
 
+#Run background sbt MyMain
+nohup sbt "project cobalt-rc35" "runMain packageName.MyMain" &
+
 #Keywords
 #Loan pattern
 https://www.outbrain.com/techblog/2017/05/effective-testing-with-loan-pattern-in-scala/
@@ -40,8 +43,9 @@ def map[B](f: A => B): M[B]
 
 #How to handle dates ?
 #Avoid LocalDate because it's not precise enough
+#https://stackoverflow.com/questions/52633045/converting-java-date-to-offsetdatetime
 Instant.now
-Instant.now().toEpochMilli
+Instant.now().toEpochMilli ## En entrée ou sortie d'API
 OffsetDateTime.now()
 ZonedDateTime.now()
 java.util.Date.from(Instant.now())
@@ -77,3 +81,199 @@ case class User(id: Option[String], name: String, email: Option[String] = None, 
 case class UserCreation(name: String, email: String)
 case class User(id: String, name: String, email: String)
 case class UserFull(id: String, name: String, email: String, friends: Seq[String], admin: Boolean)
+
+
+#How to make a private constructor for a class ?
+#https://stackoverflow.com/questions/1730536/private-and-protected-constructor-in-scala
+sealed trait Foo {
+ // interface
+}
+
+object Foo {
+  def apply(...): Foo = // public constructor
+
+  private class FooImpl(...) extends Foo { ... } // real class
+}
+
+#What to do when a timeout occured in Future ?
+override implicit val patienceConfig = PatienceConfig(Span(5, Seconds))
+
+#Encapsulate errors
+sealed trait IbanError extends Throwable
+object IbanError {
+   case object MalformedIbanError extends IbanError
+}
+
+#What is a timestamp ?
+Number of seconds since 01/01/1970 00:00:00
+Also called epoch
+#Why ?
+Because dates are difficult to manipulate
+Timestamp is easier to manipulate as an integer
+
+#How UUID works ?
+val uuid = UUIs.timeBased()
+UUIDs.unixTimestamp(uuid) <= millisecond
+#OR
+uuid.timestamp() <= nanosecond
+#Else
+ils ont une différence de référence temporel aussi. 
+Si tu fais un Instant.ofEpochMilli(uuid.timestamp()/10000)  
+tu auras pas la date du jour. Instant.ofEpochMilli ,
+tout comme UUIDs.unixTimestamp  auront pour référence temporelle 1582 (je sais plus quel jour) 
+tandis que .timestamp() retourne un epoch à partir de 1970.
+
+#How to generate random UUIDs with unix ?
+uuidgen
+#Output
+54C64843-6485-4B0D-A97F-A14AE11D9BA2
+
+#What are the versions ?
+timeuuid (version 1) used on NoSQL databases
+uuid (version 4)
+
+#How to filter elements with a method ?
+private def filterOperationToCompensate(bucket: HourlyFrequency,
+                                          operationId: UUID): OperationToCompensate => Boolean =
+    operationToCompensate => operationToCompensate.bucket == bucket && operationToCompensate.operationId == operationId
+
+
+#How to convert a string into an Option
+val value: String = ""
+Option(value).filter(_.nonEmpty)
+
+#How to handle conflicts between typed/untyped actors ?
+import akka.actor.typed.scaladsl.adapter._.
+private val testKit: TestKit = new TestKit(ActorSystem("SepaInquiriesInCrossModuleHelper"))
+private implicit val untypedSystem: ActorSystem = testKit.system
+private val system: typed.ActorSystem[_] = untypedSystem.toTyped
+
+
+#Voir les tests de queries
+: =>
+vs
+  lazy
+
+#Be careful with EitherT and for-comprehesion
+There are some issues when using multiple EitherT inside for-comprehension
+Use .leftWiden to provide "surtype" for compilation
+
+#Example
+_ <- EitherT
+        .cond(checkAccountStatus(agencyAccount).nonEmpty, (), AccountStatusForbidden(agencyAccount.status))
+        .leftWiden[AssociationError]
+
+#How to create implicit function in scala ?
+private implicit val value: A => B = a => {
+  ....
+  b
+}
+
+#How to encode/decode JSON in Scala ?
+Circe uses Encoder and Decoder type classes for encoding and decoding. 
+An Encoder[A] instance provides a function that will convert any A to a Json
+A Decoder[A] takes a Json value to either an exception or an A. 
+Circe provides implicit instances of these type classes for many types from the Scala standard library, including Int, String, and others.
+It also provides instances for List[A], Option[A], and other generic types, but only if A has an Encoder instance.
+
+#How to transform 
+#import io.circe.Json
+#import io.circe.syntax._
+#import io.circe.literal._
+val agencyIbanJSON =Json.obj("agencyIban"-> fakeIban.asJson)
+#OR 
+ json"""{
+          "agencyIban": $fakeIban
+        }"""
+
+#How to handle failure with Circe ?
+No need to use DecodingFailure
+IO is a MonadError of Throwable => works as a future
+If decoding failed theb it fails and stops the actual flow, except in case of recovery.
+
+We try to apply different error handlers from core to dispatcher/cards-repository.
+Dans les deux autres projets, il y a une distinction très net. 
+Les erreurs métier sont des erreurs que l'on code et qu'on expose très clairement à travers des Either(T)
+
+Quand aux erreurs techniques, ce sont les erreurs qui sont levés par les différents libs (circe, doobie, etc..). Bien souvent ces erreurs sont "critiques" pour le traitement, 
+il ne peut pas continuer car le JSON n'est pas bon ou la BDD ne répond pas. Alors on applique le principe de "let it crash"
+
+L'IO va intercepter ces problèmes, interrompre le traitement (et proprement car elle a une notions de "ressource"), puis renvoyer une 500 et des logs
+
+Bien entendu, dans certains rares cas le let it crash ne peut pas s'appliquer.
+Dans ce cas tu peux utiliser les méthodes recover ou recoverWith pour catcher uniquement l'erreur qui t'intéresse en erreur métier ou alors effectuer un traitement alternatif (edited) 
+La prochaine étape sera d'intégrer cats-retry pour ajouter des stratégies de rejeu en cas de problème.
+
+#How akka works ?
+mapConcat
+divertTo
+alsoTo
+
+#Filtrage doublons run
+ls ECO_SEPA_*.csv | xargs -I{} sh -c "echo {} && cat {} | wc -l && cat {} | sort | uniq | wc -l"
+
+#How to decode a String into an object
+val value: String
+MyObject.withNameOption(value)
+MyObject.withName(value)
+
+#
+import scala.collection.JavaConverters._
+
+#How to avoid using while(...) ?
+Iterator.continually(resultSet)
+        .takeWhile(_.next())
+        .map { resultSet =>
+          {
+            for {
+              ibans <- Either
+                .catchNonFatal(resultSet.getArray("ibans").getArray.asInstanceOf[Array[String]].toList)
+                .map(_.map(Iban.apply))
+              status <- Either
+                .catchNonFatal(resultSet.getString("status"))
+                .flatMap(
+                  ExternalEventMonitoringStatus
+                    .withNameOption(_)
+                    .toRight(new Error("Invalid external event monitoring status")))
+              createdAt <- Either.catchNonFatal(resultSet.getTimestamp("created_at")).map(_.toInstant)
+              updatedAt <- Either.catchNonFatal(resultSet.getTimestamp("updated_at")).map(_.toInstant)
+              event <- Either.catchNonFatal(resultSet.getString("event_json")).map(decode[ExternalEvent]).joinRight
+          } yield {...}
+
+#Other than map, flatMap...?
+subflatMap
+semiFlatMap
+leftSemiFlatMap
+
+
+#How to create an account ?
+Launch ACCOUNT_API port 8984
+curl http://localhost:8080/accounts/FR7616598000010000001000143 -H "Content-Type: application/json" -d '{"nob":"nob","category":"PART_CATEGORY","pos_external_id":"dzd"}'
+
+
+private def authorize(): F[Either[FeeError, AuthorizationSuccess]] = {
+    val authorizationInput = new AuthorizationApiInput()
+    val httpRequest = HttpRequest(
+      method = HttpMethods.POST,
+      uri = Uri(authorizationUri),
+      headers = List(RawHeader("X-Correlation-ID", uuidProvider().toString)),
+      entity = HttpEntity(ContentTypes.`application/json`, "")
+    )
+  }
+
+#How to log an error from Future and return the future ?
+#Like a wrapper
+    import cats.syntax.flatMap._
+
+    private def logFeesError(feeDemand: Future[Either[FeeError, Unit]]): Future[Either[FeeError, Unit]] =
+    feeDemand.flatTap {
+      case error @ Left(value) =>
+        logger.warning()
+        Future.successful(error)
+      case _ => Future.successful(Right(()))
+    }
+
+#How to send Either result inside the Future ?
+.rethrowT sert à envoyer l’exception de ton EitherT dans ta future ou IO, tu passes de EitherT[Future, Exception, Truc] à tout simplement Future[Truc]
+.recover est l’équivalent d’un catch dans le cas d’une MonadError (donc future ou IO)
+Avec un recover ça te permet de récupérer une erreur, et d’appliquer une valeur de retour

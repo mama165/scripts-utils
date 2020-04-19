@@ -2,4 +2,65 @@
 
 Mutilple partitions in one topic
 Write at the end of each partitions (default)
+Round robin by default
 Or write in a specific partition
+
+#How Kafka works ?
+No partition key : 
+    By default, when producing data, round robin fashion is used (paralellism).
+With partition key :
+    hash(key) % numPartitions
+
+
+#How to debug ?
+We write message and the kafka conf specifies that it is commited for each groupID.
+So when consuming one groupID, if the conf says commit=false,
+we can consume it indefinitly without deleting messages
+
+#List all topics (local)
+kafka-topics --list --bootstrap-server localhost:9092
+
+#Create a topic
+kafka-topics --create --if-not-exists --bootstrap-server localhost:9092 --topic orders
+
+#List all topics (remote)
+#With configuration file
+#host: remote.adress, port 9093
+kafka-topics --list --bootstrap-server remote.adress:9093 --command-config directory/config.conf
+
+#Delete a topic
+kafka-topics --delete --bootstrap-server localhost:9092 --topic local_topic
+
+#Delete all topics
+#!/bin/bash
+
+TOPICS=$(kafka-topics --list --bootstrap-server localhost:9092)
+
+for T in $TOPICS
+do
+  if [ "$T" != "__consumer_offsets" ]; then
+    kafka-topics --delete --bootstrap-server localhost:9092 --topic $T
+ fi
+done
+
+#Display all messsages
+kafka-console-consumer --bootstrap-server localhost:9092 --topic local_topic
+
+#Display all messsages
+#Remote adress witch config
+kafka-console-consumer --bootstrap-server remote.adress:9093 --consumer.config /Users/mnana/Downloads/Archive/staging.claranet.conf --topic "public.cobalt.checks-notify-events.v1" --from-beginning
+
+#Display all messsages (only one specific attribute)
+#jq is a tool to manipulate some json datas
+kafka-console-consumer --bootstrap-server localhost:9092 --topic local_topic --from-beginning | jq .uuid
+
+curl -XPOST localhost:8253/eco_consumer_credit_card_accounting
+
+
+kafka-topics --list --bootstrap-server nicqueue101.nickel-np.as44099.net:9093,nicqueue102.nickel-np.as44099.net:9093,nicqueue103.nickel-np.as44099.net:9093 --consumer.config /Users/mnana/Downloads/Archive/staging.claranet.conf --topic "public.cobalt.checks-notify-events.v1" --from-beginning
+
+#Display offset
+kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group EVENTS_PROCESSOR
+#Output
+GROUP            TOPIC                          PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG    CONSUMER-ID                                                      HOST            CLIENT-ID
+EVENTS_PROCESSOR local-cobalt.events.accounting 0          7               7               0      consumer-EVENTS_PROCESSOR-1-{uuid} /172.22.0.1     consumer-EVENTS_PROCESSOR-1

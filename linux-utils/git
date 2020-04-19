@@ -2,6 +2,15 @@
 
 #https://github.blog/2015-06-08-how-to-undo-almost-anything-with-git/
 
+#Display current remote url
+git remote -v
+#Output
+origin  git@old-remote-url:ninja/my-project.git (fetch)
+origin  git@old-remote-url:ninja/my-project.git (push)
+
+#Change remote url
+git remote set-url git@remote-url:ninja/my-project.git
+
 #Initialize a repository called "docker-utils"
 git init
 git add foo.txt
@@ -47,7 +56,9 @@ git branch --remotes | wc -l
 git branch -m new-name
 #If you're not
 git branch -m old-name new-name
-#Delete the old-name remote branch
+#Delete the feature branch
+git push --delete origin feature
+
 #Push the new-name local branch.
 git push origin :old-name new-name
 
@@ -70,7 +81,8 @@ git reset
 #Undo last commit
 #If you have NOT pushed your changes to remote
 #Delete all different commits from local to HEAD
-git reset HEAD~1
+#You'll find the changes as uncommitted local modifications in your working copy.
+$ git reset --soft HEAD~1
 #If you have pushed your changes to remote
 git revert HEAD
 
@@ -113,6 +125,12 @@ git log master
 
 #Display commit history (from remote)
 git log origin/master
+
+#Display the name of the changed files
+git log --name-only
+
+#Display more changed info
+git whatchanged
 
 #Commit changes into an old commit
 #Fixup a commit with message
@@ -172,11 +190,16 @@ git commit --amend -o -m "New commit message"
 #Change pick to r (reword) and save/close
 git rebase -i @~9   # Show the last 9 commits in a text editor
 
+#Change date of commit
+git rebase -i HEAD~n
+#Edit commit 
+git commit --amend --reset-author --no-edit
+
 #Delete changes (unstaged)
 git reset --hard
 
 #Delete changes
-#Synchronyse with remote feature branch
+#Synchronize with remote feature branch
 git reset --hard origin/feature
 
 #Delete last commit (local)

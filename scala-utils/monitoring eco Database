@@ -1,0 +1,17 @@
+SELECT *
+FROM T_EVENTS_MONITORING;
+DROP TABLE T_EVENTS_MONITORING;
+INSERT INTO T_EVENTS_MONITORING (event_id, ibans, status, created_at, updated_at, scheduled_ids, event_json)
+VALUES ('adb1fb20-146f-11eb-a1e4-3564b5d1a305', 'FR7616598000010629717000165', 'GENERATED', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '',
+        '{"operationKey":{"bucket":{"date":"2020-10-01T00:00:00Z"},"iban":"FR7616598000010629717000165","id":"aca015f0-146f-11eb-a1e4-3564b5d1a305"},"demandKey":{"demandId":"9f449750-146f-11eb-a9e0-d75b048e6771","demandBucket":"2020-01-01T00:00:00Z"},"amount":666,"clientIban":"FR7616598000010629717000165","sepaDocId":"CPTR1072SDDAA","sepaTxId":"CPTR1072SDDIDG","dueDate":"2020-10-22T00:00:00","collectionDate":"2020-10-21T22:00:00Z","countryCode":"250","clientAccountStatus":"COMPTE_OUVERT","clientAccountCategory":"PART_CATEGORY","processingDateTime":"2020-10-22T14:05:45.291932Z","clientName":"CPTE MANDAT BLOQUE","sepaReason":{"code":"MS02","additionalInfo":[]},"counterpartName":"EDF","eventType":"SepaDirectDebitReturnOnHold"}');
+INSERT INTO T_EVENTS_MONITORING (event_id, ibans, status, created_at, updated_at, scheduled_ids, event_json)
+VALUES ('76127740-1446-11eb-8914-11e4b13d3cf3', 'ES1568930001740000004918;ES8868930001760000000014', 'GENERATED', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '',
+        '{"operationKey":{"bucket":{"date":"2020-10-01T00:00:00Z"},"iban":"ES1568930001740000004918","id":"760ea6b0-1446-11eb-8914-11e4b13d3cf3"},"clientIban":"ES1568930001740000004918","clientAccountStatus":"COMPTE_OUVERT","clientAccountCategory":"PART_CATEGORY","clientFeesAmount":0,"posIban":"ES8868930001760000000014","posAccountStatus":"COMPTE_OUVERT","posAccountCategory":"PRO_CATEGORY","posCommissionAmount":0,"accountingDateTime":"2020-10-22T09:10:42.587334Z","eventType":"CardAnnualFeeEvent"}');
+INSERT INTO T_EVENTS_MONITORING (event_id, ibans, status, created_at, updated_at, scheduled_ids, event_json)
+VALUES ('76122740-1446-14eb-8714-11e4b13e3cf3', 'ES1568930001740000004918;ES8868930001760000000014', 'GENERATED', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '',
+        '{"operationKey":{"bucket":{"date":"2020-10-01T00:00:00Z"},"iban":"ES1568930001740000004918","id":"760ea6b0-1446-11eb-8914-11e4b13d3cf3"},"clientIban":"ES1568930001740000004918","clientAccountStatus":"COMPTE_OUVERT","clientAccountCategory":"PART_CATEGORY","clientFeesAmount":0,"posIban":"ES8868930001760000000014","posAccountStatus":"COMPTE_OUVERT","posAccountCategory":"PRO_CATEGORY","posCommissionAmount":0,"accountingDateTime":"2020-10-22T09:10:42.587334Z","eventType":"CardAnnualFeeEvent"}');
+SELECT COUNT(*) FROM T_EVENTS_MONITORING where event_type = 'CardAnnualFeeEvent';
+SELECT * FROM T_EVENTS_MONITORING t WHERE 'ES1568930001740000004918' IN (SELECT value FROM STRING_SPLIT(t.ibans, ';'));
+SELECT * FROM T_EVENTS_MONITORING t WHERE t.ibans LIKE '%FR7616598000010629717000165%';
+SELECT * FROM T_EVENTS_MONITORING t WHERE CONTAINS(ibans, 'FR7616598000010629717000165');
+SELECT * FROM T_EVENTS_MONITORING t WHERE CONTAINS(ibans, 'ES1568930001740000004918');

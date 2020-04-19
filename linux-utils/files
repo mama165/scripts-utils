@@ -59,3 +59,16 @@ getfacl /tmp
 
 #Find all directories named "target" and delete them
 find . -name "target" -exec rm -r {} \;
+
+#Print duplicates (console)
+uniq -d sample.csv
+
+#Print duplicates (file)
+uniq sample.csv >> duplicates.csv
+
+#Find string occurences in all files (current directory)
+grep -r "la merguez partie" .
+
+
+#How to get current shell directory inside the script ?
+https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself

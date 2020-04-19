@@ -7,3 +7,38 @@ cqlsh
 #Connection to Cassandra (remote)
 #keyspace: ninja, user: john.wick, host: remote.adress password: tryhard
 cqlsh -k ninja -u john.wick remote.adress -p tryhard
+
+#Execute a cql script (remote)
+cqlsh remote.adress 9042 -u john.wick -p tryhard -k ninja -f file.cql    
+
+CQL_PROD_READONLY=true cqlsh --keyspace=qualif_cobalt --username=supernickel --cqlversion=3.4.4 --request-timeout=3600 nicbdd002.nickel.as44099.net
+#OR
+CQL_PROD_READONLY=true cqlsh --keyspace=qualif_cobalt --username=supernickel --password=<password> --cqlversion=3.4.4 --request-timeout=3600 nicbdd101.nickel-np.as44099.net
+
+#What are roles ?
+It defines a set of permissions that can be assigned to other roles and mapped to external users.
+
+#Create a user john.wick
+CREATE ROLE john.wick WITH PASSWORD = 'dog!' AND LOGIN = true;
+
+#Give read-only rights to john.wick
+GRANT SELECT ON KEYSPACE <keyspace_name> TO ‘<user_name>';      <gives only read only access to user>
+GRANT ALL ON KEYSPACE <keyspace_name> TO ‘<user_name>';            <gives all access to user>
+
+#Show all keyspaces
+describe keyspaces;
+
+#Show all tables
+describe tables;
+
+#Display some operations
+select * from operations where iban='FR7616598000010426611000132' and bucket='2020-10-01T00:00:00Z';
+
+#Data types
+timeuuid => UUIds.timebased()
+
+#How to tune Cassandra memory (docker) ?
+You must change MAX_HEAP_SIZE and HEAP_NEWSIZE  in /etc/cassandra/cassandra-env.sh
+#Exemple
+MAX_HEAP_SIZE=512M
+HEAP_NEWSIZE=200M

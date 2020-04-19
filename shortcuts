@@ -3,10 +3,12 @@
 #MacOS
 MaJ + Option + L => |
 CTRL + SHIFT + 5 => Impr. ecran
+CTRL + SHIFT + 4 => Impr. ecran (selection)
 ALT + N => ~
+Fn + SUPPR => suppr on the right
 
 #Intellij
-Ctrl + Option + O => Optimize import
+Ctrl + Option (Alt) + O => Optimize import
 Option + CMD + L => scalafmt
 Maj + Option + 5 => Crochet
 Ctrl + Maj + p => signature
@@ -14,3 +16,12 @@ CMD + P => arguments from methods
 Maj + Option + / => \
 Maj + Alt + / => \
 CTRL + J => ScalaDoc (over a method)
+
+SHIFT + TZB
+#Avoid import everything
+Pour éviter d’importer la terre entière dans IntelliJ :
+Préférences -> Editor -> Code style -> Scala -> onglet Imports -> class count to use import with ‘_’ -> Tapez 50
+
+
+#Select all occurences
+CTRL G

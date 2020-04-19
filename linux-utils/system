@@ -61,8 +61,17 @@ systemctl stop docker.service
 #Restart a service
 systemctl restart docker
 
-#Reload a service configuration (doesn't restart)
-systemctl reload docker
+#Reload and apply new configuration (doesn't restart)
+#For example this will reload Apache's httpd.conf in the web server
+#not the apache.service systemd unit file
+systemctl reload apache2
+
+#Reload all unit files and apply new configuration
+#Recreate the entire dependency tree.
+#While the daemon is being reloaded
+#All sockets systemd listens on behalf 
+#of user configuration will stay accessible.
+systemctl daemon-reload apache2
 
 #Enable a service at boot (not started)
 systemctl enable docker
@@ -94,6 +103,12 @@ systemctl list-unit-files
 #Created by systemd
 journalctl
 
+#View specific unit logs
+journalctl - u nginx.service
+
+#View live logging
+journalctl -f -u nginx.service
+
 #How are service created ?
 Files contained in pakages downloaded from distribution repository
       /usr/lib/systemd/system/
@@ -119,3 +134,6 @@ ExecStart=/usr/bin/ninja.sh
 
 [Install] #handle triggering
 WantedBy=multi-user.target
+
+#Load and check if unit is well-formed
+systemd-analyse verify

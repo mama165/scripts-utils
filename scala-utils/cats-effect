@@ -1,0 +1,26 @@
+import cats.effect._
+
+
+val now = IO(System.currentTimeMillis())
+val now2 = IO.pure(System.currentTimeMillis())
+
+
+val a = for {
+  a <- now2
+  _ <- IO(Thread.sleep(100))
+  b <- now2
+  _ <- IO(println(a))
+  _ <- IO(println(b))
+} yield ()
+
+a.unsafeRunSync()
+
+
+#What are the advantages of Cats-Effect ?
+Cats Effect is a high-performance, asynchronous, composable framework for building real-world applications in a purely functional style within the Typelevel ecosystem.
+It adds a high-level structure of concurrency 
+
+#What is a Resource ?
+
+#What is a Blocker ?
+
