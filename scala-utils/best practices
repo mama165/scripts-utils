@@ -15,8 +15,17 @@
 - build.sbt (build definition file for sbt)
 
 
+#How to compile
+sbt clean compile
+
+#How to compile (with tests) ?
+sbt clean compile Test/compile
+
 #Run tests
 sbt test
+
+#How to only run unit tests ?
+sbt "testOnly fr.fpe.cobalt.units.*"
 
 #Run background sbt MyMain
 nohup sbt "project cobalt-rc35" "runMain packageName.MyMain" &
@@ -123,8 +132,10 @@ tu auras pas la date du jour. Instant.ofEpochMilli ,
 tout comme UUIDs.unixTimestamp  auront pour référence temporelle 1582 (je sais plus quel jour) 
 tandis que .timestamp() retourne un epoch à partir de 1970.
 
-#How to generate random UUIDs with unix ?
-uuidgen
+#How to generate random UUIDs with unix (lowercase) ?
+uuidgen | tr "[:upper:]" "[:lower:]"
+#How to generate random UUIDs in unix (clipboard) ?
+uuidgen | pbcopy
 #Output
 54C64843-6485-4B0D-A97F-A14AE11D9BA2
 
@@ -277,3 +288,24 @@ private def authorize(): F[Either[FeeError, AuthorizationSuccess]] = {
 .rethrowT sert à envoyer l’exception de ton EitherT dans ta future ou IO, tu passes de EitherT[Future, Exception, Truc] à tout simplement Future[Truc]
 .recover est l’équivalent d’un catch dans le cas d’une MonadError (donc future ou IO)
 Avec un recover ça te permet de récupérer une erreur, et d’appliquer une valeur de retour
+
+
+#How to load env variable with Ciris
+import cats.effect.{ContextShift, IO, IOApp}
+import ciris.env
+import fr.fpe.cobalt.ciris.instances
+
+import scala.concurrent.ExecutionContext
+
+object Main extends IOApp.Simple {
+  implicit val cs: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
+
+  override def run: IO[Unit] =
+    env("toto")
+      .as[CobaltDuration](instances.decodeStringToCobaltDuration)
+      .map { value =>
+        println(value)
+      }
+      .load[IO]
+
+}

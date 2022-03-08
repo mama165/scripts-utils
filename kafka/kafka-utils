@@ -17,6 +17,14 @@ We write message and the kafka conf specifies that it is commited for each group
 So when consuming one groupID, if the conf says commit=false,
 we can consume it indefinitly without deleting messages
 
+#Get broker configuration
+kafka-configs.sh --bootstrap-server localhost:9092 --entity-type brokers --all --describe
+#Output example
+auto.create.topics.enable=true
+
+#How to add topics auto creation configuration when inserting the first message ?
+KAFKA_AUTO_CREATE_TOPICS_ENABLE=true    (environment variable)
+
 #List all topics (local)
 kafka-topics --list --bootstrap-server localhost:9092
 
@@ -40,11 +48,33 @@ for T in $TOPICS
 do
   if [ "$T" != "__consumer_offsets" ]; then
     kafka-topics --delete --bootstrap-server localhost:9092 --topic $T
- fi
+  fi
 done
 
+#OR (zsh only)
+
+alias list_topics='/Users/mnana/Desktop/develop/kafka_2.13-3.1.0/bin/kafka-topics.sh --list --bootstrap-server localhost:9092'
+alias delete_topic='/Users/mnana/Desktop/develop/kafka_2.13-3.1.0/bin/kafka-topics.sh --delete --bootstrap-server localhost:9092 --topic'
+alias print_messages='/Users/mnana/Desktop/develop/kafka_2.13-3.1.0/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic'
+alias count_topics='list_topics | wc -l'
+alias create_topic='/Users/mnana/Desktop/develop/kafka_2.13-3.1.0/bin/kafka-topics.sh --create --if-not-exists --bootstrap-server localhost:9092 --topic'
+
+function delete_topics() {
+    local TOPICS=$(list_topics)
+
+    for T in ${=TOPICS}
+    do
+        if [ "$T" != "__consumer_offsets" ]; then
+           delete_topic $T
+           echo $T has been deleted
+        fi
+    done
+}
+
+Then call delete_topics in terminal
+
 #Display all messsages
-kafka-console-consumer --bootstrap-server localhost:9092 --topic local_topic
+kafka-console-consumer --bootstrap-server localhost:9092 --topic local_topic --from-beginning
 
 #Display all messsages
 #Remote adress witch config

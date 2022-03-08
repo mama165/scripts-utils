@@ -237,3 +237,38 @@ gst
 glog
 gl
 gstp (git stash pop)
+
+#How to make a tag ?
+git tag 23.2.0
+
+#How to list tags ?
+git tag -n
+#Output
+0.9.10          This a commit example
+0.9.11          Merge branch 'master' into next
+
+#How to delete a tag
+git tag -d 39.8.0
+git push --delete origin 39.8.0
+#Output
+Deleted tag '39.8.0' (was 808b598)
+
+
+#How to handle release management
+#Retrieve changes from origin/next
+git checkout master
+git fetch
+git merge origin/next
+sbt "show version"
+git tag $version
+git push origin $tag
+git checkout next
+git pull
+git merge $tag
+git push
+
+#How to rollback a file ?
+git checkout origin/master -- file.txt 
+
+#How to change the author ?
+git commit --amend --author="John Wick"
