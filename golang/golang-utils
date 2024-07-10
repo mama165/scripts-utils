@@ -1,0 +1,61 @@
+# How to get installed go version ?
+go version
+# Output
+# go version go1.22.4 darwin/amd64
+
+# How to put dependencies from the code into go.mod ?
+go mod tidy
+
+# How to update dependencies ?
+go get -u ./...
+
+# How to update a dependency targeting a pull request ?
+go get -u github.com/livingpackets/project@branch-name
+#Par exemple : go get -u github.com/livingpackets/sdk-go@CU-86bza64mr
+
+# How to update dependencies and download test files ?
+go get -u -t ./...
+
+# How to update dependencies, download test files and put dependencies inside go.mod ?
+go get -u - t ./... && go mod tidy
+
+# How to check/validate the syntax of a project ?
+go vet ./...
+
+# How to run all tests ?
+go test ./...
+
+# How to build an executable locally ?
+go build path/to/main.go
+
+# How to run a program without building any executable locally ?
+go run path/to/main.go
+
+# How to build an executable an put it in $GOPATH/bin ?
+go install path/to/main.go
+
+# How to configure golang-ci-lint ?
+# Install through https://golangci-lint.run/welcome/install/
+
+# How to set environment variable for golang ?
+export GOPATH=$HOME/go
+export GOPROXY=direct
+export GOPRIVATE=gitlab.livingpackets.com/*,github.com/livingpackets/*
+export PATH="$PATH:$(go env GOPATH)/bin"
+
+# How to download dependencies from go.mod with ssh instead of https
+# Change directory to ~/.gitconfig
+# Add those lines into ~/.gitconfig
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+
+
+# How to return a formatted error ?
+# Similar to throwable
+fmt.Errorf("invalid character detected: %c", r)
+
+# How to install/run the CI linter locally ?
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.59.1
+#OR
+brew install golangci-lint
+golangci-lint run
