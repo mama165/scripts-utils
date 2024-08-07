@@ -3,6 +3,18 @@ go version
 # Output
 # go version go1.22.4 darwin/amd64
 
+# How to set environment variable for golang ?
+export GOPATH=$HOME/go
+export GOPROXY=direct
+export GOPRIVATE=gitlab.livingpackets.com/*,github.com/livingpackets/*
+export PATH="$PATH:$(go env GOPATH)/bin"
+
+# How to download dependencies from go.mod with ssh instead of https
+# Change directory to ~/.gitconfig
+# Add those lines into ~/.gitconfig
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+
 # How to put dependencies from the code into go.mod ?
 go mod tidy
 
@@ -37,19 +49,6 @@ go install path/to/main.go
 # How to configure golang-ci-lint ?
 # Install through https://golangci-lint.run/welcome/install/
 
-# How to set environment variable for golang ?
-export GOPATH=$HOME/go
-export GOPROXY=direct
-export GOPRIVATE=gitlab.livingpackets.com/*,github.com/livingpackets/*
-export PATH="$PATH:$(go env GOPATH)/bin"
-
-# How to download dependencies from go.mod with ssh instead of https
-# Change directory to ~/.gitconfig
-# Add those lines into ~/.gitconfig
-[url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
-
-
 # How to return a formatted error ?
 # Similar to throwable
 fmt.Errorf("invalid character detected: %c", r)
@@ -59,3 +58,7 @@ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/insta
 #OR
 brew install golangci-lint
 golangci-lint run
+
+#How to undertype an interface ?
+# Ok is a boolean with true if the result is a subtype of interface
+result, ok = myType.(*interface) 

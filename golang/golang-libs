@@ -1,0 +1,22 @@
+# How to validate inputs from an http api ?
+# Similar to ValidatedNel de Scala
+https://github.com/go-playground/validator
+
+# How to handle migrations from the database ?
+https://github.com/pressly/goose
+
+# How to fetch records from the database ?
+https://github.com/jmoiron/sqlx
+
+# How to handle uuid ?
+https://github.com/google/uuid
+
+# How to do image processing ?
+https://github.com/disintegration/imaging
+
+# How to store datas in memory cache ?
+https://github.com/patrickmn/go-cache
+
+#How to use the publish/subscribe pattern with Kafka/NATS ?
+#Watermill is kind of an abstraction for Golang Channel, RabbitMQ Redis Stream, Amazon SQS...
+https://github.com/ThreeDotsLabs/watermill
