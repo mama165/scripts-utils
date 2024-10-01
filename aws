@@ -1,0 +1,55 @@
+# How to install awslocal locally ?
+https://formulae.brew.sh/formula/awscli-local
+
+# Dans Localstack
+docker exec -it eventbus /bin/bash
+
+# How to get all queues ?
+awslocal sqs list-queues
+
+# How to send a message ?
+# Dans Localstack
+awslocal sqs send-message --queue-url "http://sqs.eu-central-1.localhost.localstack.cloud:4566/000000000000/localstack-queue" --message-body "Hello World"
+
+# How to send a message ?
+# Dans Localstack
+awslocal sqs receive-message --queue-url "http://sqs.eu-central-1.localhost.localstack.cloud:4566/000000000000/localstack-queue"
+
+# How to set a ttl retention value of 1 min in Localstack ?
+# Using an environnement variable inside the docker
+SQS_ENABLE_MESSAGE_RETENTION_PERIOD=60
+
+
+
+
+
+caused by: Post "http://sqs.eu-central-1.localhost.localstack.cloud:4566/": dial tcp 127.0.0.1:4566: connect: connection refused
+
+
+awslocal sqs receive-message --queue-url "http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/myservice"
+
+
+http://sqs.eu-central-1.localhost.localstack.cloud:4566/000000000000/localstack-queue
+
+
+
+#----
+# Dans la config ~/.aws/config
+[default]
+sso_start_url = https://livingpackets.awsapps.com/start/
+sso_region = eu-central-1
+sso_account_id = 487814793757
+sso_role_name = Developer
+region = eu-central-1
+
+# Se connecter
+# Utiliser le MFA pour se connnecter à Okta
+aws sso login
+
+# Pour se connecter au registry
+# Pas besoin de faire quoi que ce soit d'autre
+aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 487814793757.dkr.ecr.eu-central-1.amazonaws.com
+# output
+Login Succeeded
+
+docker pull 487814793757.dkr.ecr.eu-central-1.amazonaws.com/lp-service-lpaccount:dev-efdde62c2bab9ab3592e20d796251ed61d929b48

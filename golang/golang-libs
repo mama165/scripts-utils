@@ -8,6 +8,9 @@ https://github.com/pressly/goose
 # How to fetch records from the database ?
 https://github.com/jmoiron/sqlx
 
+# How to create a new migration file ?
+https://medium.com/@aldinofrizal/golang-migrate-8990135cdc6
+
 # How to handle uuid ?
 https://github.com/google/uuid
 

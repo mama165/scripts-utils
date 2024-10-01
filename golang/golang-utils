@@ -62,3 +62,19 @@ golangci-lint run
 #How to undertype an interface ?
 # Ok is a boolean with true if the result is a subtype of interface
 result, ok = myType.(*interface) 
+
+
+#How to test args with gomock ?
+mock.EXPECT().MaMethode(gomock.Any(), gomock.Any()).Do(
+  // Répéter les args de la méthode appelée
+  func (arg1 string, arg2 *Event) {
+    // Ici, faire le test sur les args
+  }
+)
+
+goimports -w .
+
+# How to add a step for CI to check outdated dependencies ?
+# Add this lines into a review.yml
+go install github.com/psampaz/go-mod-outdated@latest
+go list -mod=readonly -u -m -json all | go-mod-outdated -direct -update -ci

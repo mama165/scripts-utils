@@ -283,3 +283,7 @@ git checkout origin/master -- file.txt
 
 #How to change the author ?
 git commit --amend --author="John Wick"
+
+git commit --amend --author="Author Name john.wick.email.com"
+
+git commit --amend --author="Author Name mael.nana@livingpackets.com"
