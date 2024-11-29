@@ -37,6 +37,15 @@ go vet ./...
 # How to run all tests ?
 go test ./...
 
+# How to format recursively a whole project ?
+gofmt -w -s .
+
+# How to format recursively a whole project (dry ryn) ?
+gofmt -s -d .
+
+# How to perform a goimport on a whole project
+find . -name '*.go' -exec goimports -w {} +
+
 # How to build an executable locally ?
 go build path/to/main.go
 
@@ -49,10 +58,6 @@ go install path/to/main.go
 # How to configure golang-ci-lint ?
 # Install through https://golangci-lint.run/welcome/install/
 
-# How to return a formatted error ?
-# Similar to throwable
-fmt.Errorf("invalid character detected: %c", r)
-
 # How to install/run the CI linter locally ?
 curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.59.1
 #OR
@@ -63,7 +68,6 @@ golangci-lint run
 # Ok is a boolean with true if the result is a subtype of interface
 result, ok = myType.(*interface) 
 
-
 #How to test args with gomock ?
 mock.EXPECT().MaMethode(gomock.Any(), gomock.Any()).Do(
   // Répéter les args de la méthode appelée
@@ -72,9 +76,45 @@ mock.EXPECT().MaMethode(gomock.Any(), gomock.Any()).Do(
   }
 )
 
-goimports -w .
+# How to solve problem "File is not `goimports`-ed (goimports)" ?
+goimports -w file.go
 
 # How to add a step for CI to check outdated dependencies ?
 # Add this lines into a review.yml
 go install github.com/psampaz/go-mod-outdated@latest
 go list -mod=readonly -u -m -json all | go-mod-outdated -direct -update -ci
+
+# How to launch unit & integration tests ?
+SQL_DB=device SQL_USER=lp SQL_PASS=secret go test ./...
+
+# How to return a formatted error ?
+# Similar to throwable
+# Returns an error and not a string
+fmt.Errorf("invalid character detected: %c", r)
+
+# Where to find common formatting verbs in Go Printf function ?
+# https://medium.com/@teamcode20233/printing-in-go-with-the-print-and-printf-functions-e948d6b4f3e4
+# How to print an integer ?
+value := 42
+fmt.Printf("Boolean value : %d", value)
+
+# How to print a float ?
+value := 1.75
+fmt.Printf("Boolean value : %d", value)
+
+# How to print a boolean ?
+value := true
+fmt.Printf("Boolean value : %t", value)
+
+# How to print the same value multiple times ?
+age := 25
+name := "John"
+fmt.Printf("My name is %v and I am %v years old.", name, age)
+
+# How to get some caracters of a string after an index ?
+str := "hello"
+three_letters := str[3]
+
+# Where to find some open cell id ?
+# Useful to know the location matching with cell datas
+https://www.opencellid.org/#zoom=18&lat=37.784915&lon=-122.424976

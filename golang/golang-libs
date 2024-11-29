@@ -23,3 +23,9 @@ https://github.com/patrickmn/go-cache
 #How to use the publish/subscribe pattern with Kafka/NATS ?
 #Watermill is kind of an abstraction for Golang Channel, RabbitMQ Redis Stream, Amazon SQS...
 https://github.com/ThreeDotsLabs/watermill
+
+#How to handle distances, latitude, longitude ?
+https://github.com/paulmach/orb
+
+#How to use uber database base for geolocation ?
+github.com/uber/h3-go
