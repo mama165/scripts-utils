@@ -1,0 +1,3 @@
+# How to limit the golang memory ?
+# Use environment variable GOMEMLIMIT
+export GOMEMLIMIT=100MiB  # Limite la mémoire à 100 mégaoctets

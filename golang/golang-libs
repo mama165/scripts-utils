@@ -20,12 +20,30 @@ https://github.com/disintegration/imaging
 # How to store datas in memory cache ?
 https://github.com/patrickmn/go-cache
 
-#How to use the publish/subscribe pattern with Kafka/NATS ?
+# How to use the publish/subscribe pattern with Kafka/NATS ?
 #Watermill is kind of an abstraction for Golang Channel, RabbitMQ Redis Stream, Amazon SQS...
 https://github.com/ThreeDotsLabs/watermill
 
-#How to handle distances, latitude, longitude ?
+# How to handle distances, latitude, longitude ?
 https://github.com/paulmach/orb
 
-#How to use uber database base for geolocation ?
+# How to use uber database base for geolocation ?
 github.com/uber/h3-go
+
+
+# How to use buf for protobuf generation ?
+# Use a buf.yaml liner
+# Use the commande "buf lint"
+lint:
+  use:
+    - DEFAULT
+    - COMMENTS  <- If comments are missing : message CustomRequest should have a non-empty comment for documentation
+    - UNARY_RPC
+    - PACKAGE_NO_IMPORT_CYCLE
+  except:
+    - PACKAGE_VERSION_SUFFIX
+    - RPC_RESPONSE_STANDARD_NAME
+    - RPC_REQUEST_RESPONSE_UNIQUE
+  rpc_allow_google_protobuf_empty_requests: true
+  rpc_allow_google_protobuf_empty_responses: true
+
