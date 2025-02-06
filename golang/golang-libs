@@ -1,5 +1,6 @@
 # How to validate inputs from an http api ?
 # Similar to ValidatedNel de Scala
+# Use StructCtx
 https://github.com/go-playground/validator
 
 # How to handle migrations from the database ?
@@ -28,8 +29,33 @@ https://github.com/ThreeDotsLabs/watermill
 https://github.com/paulmach/orb
 
 # How to use uber database base for geolocation ?
-github.com/uber/h3-go
+https://github.com/uber/h3-go
 
+# How to compare structures in golang ?
+https://github.com/google/go-cmp
+#cmp.Equal(x, y interface{})
+
+# How to send some analytics ?
+https://github.com/amplitude/analytics-go
+
+# How to expose an http server ?
+https://github.com/go-chi/chi/v5
+
+# How to expose both http1 and http2 server ?
+https://github.com/grpc-ecosystem/grpc-gateway/v2
+
+# How to use a Lodash-style Go library with generics (map, filter, contains, find...)
+https://github.com/samber/lo
+
+# How to use a fast cache memory ?
+https://github.com/allegro/bigcache/v3
+
+# How to write http calls for e2e ?
+# Useful for expectations and assertions
+https://github.com/gavv/httpexpect/v2
+
+# How to easily unmarshal environment variables 
+https://github.com/Netflix/go-env
 
 # How to use buf for protobuf generation ?
 # Use a buf.yaml liner

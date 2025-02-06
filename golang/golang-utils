@@ -23,6 +23,8 @@ go get -u ./...
 
 # How to update a dependency targeting a pull request ?
 go get -u github.com/livingpackets/project@branch-name
+#Très utile pour récupérer une dépendance sur une pull request donc une branche en cours
+#Et sans avoir à re-livrer toute l'application
 #Par exemple : go get -u github.com/livingpackets/sdk-go@CU-86bza64mr
 
 # How to update dependencies and download test files ?
